@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Locale;
 
+import static org.springframework.util.StringUtils.hasText;
+
 @Configuration
 public class P6SpySqlFormatter implements MessageFormattingStrategy {
 
@@ -19,20 +21,34 @@ public class P6SpySqlFormatter implements MessageFormattingStrategy {
 
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
-        sql = formatSql(category, sql);
-        return String.format("[%s] | %d ms | %s", category, elapsed, formatSql(category, sql));
+        String formattedSql = formatSql(category, sql);
+        return formatLog(elapsed, category, formattedSql);
     }
 
     private String formatSql(String category, String sql) {
-        if (sql != null && !sql.trim().isEmpty() && Category.STATEMENT.getName().equals(category)) {
-            String trimmedSQL = sql.trim().toLowerCase(Locale.ROOT);
-            if (trimmedSQL.startsWith("create") || trimmedSQL.startsWith("alter") || trimmedSQL.startsWith("comment")) {
-                sql = FormatStyle.DDL.getFormatter().format(sql);
-            } else {
-                sql = FormatStyle.BASIC.getFormatter().format(sql);
+        if (hasText(sql) && isStatement(category)) {
+            String trimmedSQL = trim(sql);
+            if (isDdl(trimmedSQL)) {
+                return FormatStyle.DDL.getFormatter().format(sql);
             }
-            return sql;
+            return FormatStyle.BASIC.getFormatter().format(sql); // maybe DML
         }
         return sql;
+    }
+
+    private static boolean isDdl(String trimmedSQL) {
+        return trimmedSQL.startsWith("create") || trimmedSQL.startsWith("alter") || trimmedSQL.startsWith("comment");
+    }
+
+    private static String trim(String sql) {
+        return sql.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private static boolean isStatement(String category) {
+        return Category.STATEMENT.getName().equals(category);
+    }
+
+    private String formatLog(long elapsed, String category, String formattedSql) {
+        return String.format("[%s] | %d ms | %s", category, elapsed, formatSql(category, formattedSql));
     }
 }
