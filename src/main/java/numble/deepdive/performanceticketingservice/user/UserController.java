@@ -31,8 +31,6 @@ public class UserController {
 
         userRepository.save(entity);
 
-        System.out.println("entity = " + entity);
-
         return entity.getId();
     }
 
@@ -42,8 +40,6 @@ public class UserController {
         GeneralUser entity = request.toEntity();
 
         userRepository.save(entity);
-
-        System.out.println("entity = " + entity);
 
         return entity.getId();
     }
