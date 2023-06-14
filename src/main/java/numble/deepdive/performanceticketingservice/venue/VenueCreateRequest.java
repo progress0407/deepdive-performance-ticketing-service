@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,6 +30,6 @@ public class VenueCreateRequest {
     private List<Seat> convertSeats() {
         return seats.stream()
                 .map(SeatCreateRequest::toEntity)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 }
