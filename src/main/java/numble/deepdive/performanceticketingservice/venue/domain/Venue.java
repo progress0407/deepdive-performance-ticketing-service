@@ -1,11 +1,10 @@
-package numble.deepdive.performanceticketingservice.venue;
+package numble.deepdive.performanceticketingservice.venue.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import numble.deepdive.performanceticketingservice.performance.Performance;
 
 import java.util.ArrayList;
 import java.util.List;

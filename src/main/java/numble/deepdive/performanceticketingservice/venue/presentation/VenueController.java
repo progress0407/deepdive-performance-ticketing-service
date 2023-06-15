@@ -1,8 +1,11 @@
-package numble.deepdive.performanceticketingservice.venue;
+package numble.deepdive.performanceticketingservice.venue.presentation;
 
 import lombok.RequiredArgsConstructor;
+import numble.deepdive.performanceticketingservice.venue.domain.Venue;
+import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateRequest;
+import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateResponse;
+import numble.deepdive.performanceticketingservice.venue.application.VenueService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/venues")

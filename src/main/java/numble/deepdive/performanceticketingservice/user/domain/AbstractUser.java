@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.user;
+package numble.deepdive.performanceticketingservice.user.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

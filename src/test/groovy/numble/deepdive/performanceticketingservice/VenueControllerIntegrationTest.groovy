@@ -1,8 +1,8 @@
 package numble.deepdive.performanceticketingservice
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import numble.deepdive.performanceticketingservice.venue.SeatCreateRequest
-import numble.deepdive.performanceticketingservice.venue.VenueCreateRequest
+import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest
+import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext

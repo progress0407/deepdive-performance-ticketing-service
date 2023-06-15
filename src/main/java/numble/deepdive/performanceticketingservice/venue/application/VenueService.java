@@ -1,6 +1,8 @@
-package numble.deepdive.performanceticketingservice.venue;
+package numble.deepdive.performanceticketingservice.venue.application;
 
 import lombok.RequiredArgsConstructor;
+import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
+import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

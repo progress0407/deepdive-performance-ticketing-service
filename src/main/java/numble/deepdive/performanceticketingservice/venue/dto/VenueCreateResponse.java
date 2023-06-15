@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.venue;
+package numble.deepdive.performanceticketingservice.venue.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

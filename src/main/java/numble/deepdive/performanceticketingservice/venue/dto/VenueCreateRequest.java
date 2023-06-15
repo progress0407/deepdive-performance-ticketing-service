@@ -1,8 +1,10 @@
-package numble.deepdive.performanceticketingservice.venue;
+package numble.deepdive.performanceticketingservice.venue.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import numble.deepdive.performanceticketingservice.venue.domain.Seat;
+import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 
 import java.util.ArrayList;
 import java.util.List;

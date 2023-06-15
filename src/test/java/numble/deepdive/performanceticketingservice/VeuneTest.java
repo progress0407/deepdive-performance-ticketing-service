@@ -1,7 +1,7 @@
 package numble.deepdive.performanceticketingservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import numble.deepdive.performanceticketingservice.venue.VenueRepository;
+import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
