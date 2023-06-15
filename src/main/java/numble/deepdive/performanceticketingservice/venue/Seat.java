@@ -5,11 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @ToString
 public class Seat {
 
@@ -18,7 +20,8 @@ public class Seat {
     private Long id;
 
     private String seatNumber;
-    private String seatType;
+
+    private String seatType; // TODO Enum으로 분리할것 VIP, 일반
 
     public Seat(String seatNumber, String seatType) {
         this.seatNumber = seatNumber;
