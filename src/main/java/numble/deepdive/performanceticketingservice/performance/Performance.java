@@ -20,16 +20,14 @@ import static java.util.stream.Collectors.toSet;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString(exclude = "venue")
+@ToString
 public class Performance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JoinColumn(name = "venue_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Venue venue;
+    private long venueId;
 
     private String name;
 
@@ -47,8 +45,8 @@ public class Performance {
     @OneToMany
     private Set<PerformanceSeat> performanceSeats = new HashSet<>();
 
-    public Performance(Venue venue, String name, int capacity, LocalDate date, LocalTime startTime, LocalTime endTime, Map<String, Integer> prices) {
-        this.venue = venue;
+    public Performance(long venueId, String name, int capacity, LocalDate date, LocalTime startTime, LocalTime endTime, Map<String, Integer> prices) {
+        this.venueId = venueId;
         this.name = name;
         this.capacity = capacity;
         this.date = date;
@@ -63,11 +61,12 @@ public class Performance {
 
     /**
      * Type을 변경하고
+     * <br>
      * 부모와의 연관관계를 매핑합니다
      */
     private Set<PerformanceSeat> convertAndMapParentRelation(List<Seat> seats) {
         return seats.stream()
-                .map(it -> new PerformanceSeat(it.getSeatNumber(), it.getSeatType(), this))
+                .map(seat -> new PerformanceSeat(seat, this))
                 .collect(toSet());
     }
 }

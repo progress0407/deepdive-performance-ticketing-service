@@ -36,7 +36,7 @@ public class PerformanceController {
         Venue venue = venueRepository.findById(venueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 공연장입니다."));
         List<Seat> seats = venue.getSeats();
 
-        Performance performance = request.toEntity(venue);
+        Performance performance = request.toEntity(venueId);
         performance.registerSeats(seats);
 
         performanceRepository.save(performance);
@@ -69,10 +69,10 @@ public class PerformanceController {
 
         private Map<String, Integer> gradeToPrice;
 
-        public Performance toEntity(Venue venue) {
+        public Performance toEntity(long venueId) {
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            return new Performance(venue, name, Integer.valueOf(capacity), LocalDate.parse(date, dateFormatter), parse(startTime, timeFormatter), parse(endTime, timeFormatter), gradeToPrice);
+            return new Performance(venueId, name, Integer.valueOf(capacity), LocalDate.parse(date, dateFormatter), parse(startTime, timeFormatter), parse(endTime, timeFormatter), gradeToPrice);
         }
     }
 }

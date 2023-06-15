@@ -15,16 +15,13 @@ import static java.util.stream.Collectors.toList;
 public class VenueCreateRequest {
 
     private String name;
-    private int capacity;
-    private String venuesType;
-    private String possibleTimes;
     private List<SeatCreateRequest> seats = new ArrayList<>();
 
     public Venue toEntity() {
 
         List<Seat> seats = convertSeats();
 
-        return new Venue(name, capacity, venuesType, possibleTimes, seats);
+        return new Venue(name, seats);
     }
 
     private List<Seat> convertSeats() {

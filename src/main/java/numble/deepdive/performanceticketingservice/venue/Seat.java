@@ -9,7 +9,7 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString
+@ToString(exclude = {"venue"})
 public class Seat {
 
     @Id
@@ -18,7 +18,8 @@ public class Seat {
 
     private String seatNumber;
 
-    private String seatType; // TODO Enum으로 분리할것 VIP, 일반
+    @Enumerated(EnumType.STRING)
+    private SeatType seatType;
 
     @JoinColumn(name = "venue_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,6 +27,6 @@ public class Seat {
 
     public Seat(String seatNumber, String seatType) {
         this.seatNumber = seatNumber;
-        this.seatType = seatType;
+        this.seatType = SeatType.from(seatType);
     }
 }

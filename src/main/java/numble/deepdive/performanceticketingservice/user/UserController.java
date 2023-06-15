@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public long registerGeneralUser(@Valid @RequestBody UserCreateRequest request) {
+    public long registerGeneralUser(@Valid @RequestBody GeneralUserCreateRequest request) {
 
         GeneralUser entity = request.toEntity();
 
@@ -78,18 +78,15 @@ public class UserController {
         @NotNull(message = "사업자 등록번호는 필수입니다.")
         private String businessLicense;
 
-        @NotNull(message = "타입은 필수입니다.")
-        private String type;
-
         public BusinessUser toEntity() {
-            return new BusinessUser(name, email, password, businessLicense, type);
+            return new BusinessUser(name, email, password, businessLicense);
         }
     }
 
     @NoArgsConstructor
     @Getter
     @ToString
-    static class UserCreateRequest {
+    static class GeneralUserCreateRequest {
 
         @NotNull(message = "이름은 필수입니다.")
         private String name;
@@ -119,9 +116,6 @@ public class UserController {
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private String businessLicense;
 
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        private String type;
-
         public UserResponse(AbstractUser user) {
             this.name = user.getName();
             this.email = user.getEmail();
@@ -129,7 +123,6 @@ public class UserController {
 
             if(user instanceof BusinessUser) {
                 this.businessLicense = ((BusinessUser) user).getBusinessLicense();
-                this.type = ((BusinessUser) user).getType();
             }
         }
     }

@@ -22,24 +22,11 @@ public class Venue {
 
     private String name;
 
-    private int capacity;
-
-    private String venuesType; // TOOO Enum화
-
-    private String possibleTimes;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats = new ArrayList<>();
 
-    // TODO, 참조 관계 끊을 예정
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Performance> performances = new ArrayList<>();
-
-    public Venue(String name, int capacity, String venuesType, String possibleTimes, List<Seat> seats) {
+    public Venue(String name, List<Seat> seats) {
         this.name = name;
-        this.capacity = capacity;
-        this.venuesType = venuesType;
-        this.possibleTimes = possibleTimes;
         this.seats = seats;
     }
 }

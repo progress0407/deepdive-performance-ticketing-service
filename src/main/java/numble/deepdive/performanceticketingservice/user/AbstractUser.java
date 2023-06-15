@@ -9,7 +9,7 @@ import lombok.ToString;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
-//@DiscriminatorColumn(name = "userType")
+@DiscriminatorColumn(name = "user_type")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString

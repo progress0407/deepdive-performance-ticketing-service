@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import numble.deepdive.performanceticketingservice.venue.Seat;
+import numble.deepdive.performanceticketingservice.venue.SeatType;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,15 +20,15 @@ public class PerformanceSeat {
 
     private String seatNumber;
 
-    private String seatType; // TODO Enum으로 분리할것 VIP, 일반
+    private SeatType seatType; // TODO Enum으로 분리할것 VIP, 일반
 
     @JoinColumn(name = "performance_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Performance performance;
 
-    public PerformanceSeat(String seatNumber, String seatType, Performance performance) {
-        this.seatNumber = seatNumber;
-        this.seatType = seatType;
+    public PerformanceSeat(Seat seat, Performance performance) {
+        this.seatNumber = seat.getSeatNumber();
+        this.seatType = seat.getSeatType();
         this.performance = performance;
     }
 }
