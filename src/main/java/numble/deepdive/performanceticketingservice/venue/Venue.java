@@ -31,6 +31,7 @@ public class Venue {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats = new ArrayList<>();
 
+    // TODO, 참조 관계 끊을 예정
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Performance> performances = new ArrayList<>();
 

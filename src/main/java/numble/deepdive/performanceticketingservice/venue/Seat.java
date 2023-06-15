@@ -1,9 +1,6 @@
 package numble.deepdive.performanceticketingservice.venue;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +19,10 @@ public class Seat {
     private String seatNumber;
 
     private String seatType; // TODO Enum으로 분리할것 VIP, 일반
+
+    @JoinColumn(name = "venue_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Venue venue;
 
     public Seat(String seatNumber, String seatType) {
         this.seatNumber = seatNumber;
