@@ -6,7 +6,6 @@ import numble.deepdive.performanceticketingservice.user.application.UserService;
 import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.user.dto.*;
 import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
-@Transactional
 public class UserController {
 
     private final UserService userService;
