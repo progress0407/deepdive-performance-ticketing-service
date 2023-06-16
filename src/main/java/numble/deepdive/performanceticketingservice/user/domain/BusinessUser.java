@@ -1,5 +1,6 @@
 package numble.deepdive.performanceticketingservice.user.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -16,6 +17,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class BusinessUser extends AbstractUser {
 
+    @Column(nullable = false)
     private String businessLicense; // 사업자 등록번호
 
     public BusinessUser(String name, String email, String password, String businessLicense) {
