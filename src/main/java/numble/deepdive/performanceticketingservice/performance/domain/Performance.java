@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.toSet;
 public class Performance {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private long venueId;

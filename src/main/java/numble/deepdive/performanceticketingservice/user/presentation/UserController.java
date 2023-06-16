@@ -20,7 +20,6 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-// TODO: OSIV 끄기
 @RestController
 @RequiredArgsConstructor
 @Transactional

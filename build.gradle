@@ -47,6 +47,10 @@ dependencies {
 
     // p6spy
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
+
+    // MySQL JDBC
+    implementation 'mysql:mysql-connector-java:8.0.33'
+
 }
 
 tasks.named('test') {
