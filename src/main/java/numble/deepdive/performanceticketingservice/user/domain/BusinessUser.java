@@ -15,7 +15,7 @@ import lombok.ToString;
 @DiscriminatorValue("BUSINESS")
 @Getter
 @ToString(callSuper = true)
-public class BusinessUser extends AbstractUser {
+public class BusinessUser extends User {
 
     @Column(nullable = false)
     private String businessLicense; // 사업자 등록번호

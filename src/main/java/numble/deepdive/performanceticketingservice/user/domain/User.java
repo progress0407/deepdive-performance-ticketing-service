@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -13,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
-public abstract class AbstractUser {
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +29,12 @@ public abstract class AbstractUser {
     @Column(nullable = false)
     private String password;
 
-    public AbstractUser(String name, String email, String password) {        this.name = name;
+    public User(String name, String email, String password) {        this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public void encodePassword(BCryptPasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
     }
 }

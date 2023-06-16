@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("GENERAL")
 @ToString(callSuper = true)
-public class GeneralUser extends AbstractUser {
+public class GeneralUser extends User {
 
     public GeneralUser(String name, String email, String password) {
         super(name, email, password);

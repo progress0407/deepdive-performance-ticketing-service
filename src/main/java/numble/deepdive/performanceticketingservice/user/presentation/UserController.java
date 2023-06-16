@@ -4,13 +4,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.validation.Valid;
 import lombok.*;
-import numble.deepdive.performanceticketingservice.user.domain.AbstractUser;
+import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.user.domain.BusinessUser;
 import numble.deepdive.performanceticketingservice.user.domain.GeneralUser;
-import numble.deepdive.performanceticketingservice.user.dto.BusinessUserCreateRequest;
-import numble.deepdive.performanceticketingservice.user.dto.GeneralUserCreateRequest;
-import numble.deepdive.performanceticketingservice.user.dto.UserResponse;
-import numble.deepdive.performanceticketingservice.user.dto.UserResponses;
+import numble.deepdive.performanceticketingservice.user.dto.*;
+import numble.deepdive.performanceticketingservice.user.exception.NotMatchPasswordException;
 import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +31,7 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     private final SecretKey secretKey;
 
@@ -43,27 +41,27 @@ public class UserController {
     @PostMapping("/businesses")
     public long registerBusinessUser(@Valid @RequestBody BusinessUserCreateRequest request) {
 
-        BusinessUser entity = request.toEntity();
+        BusinessUser user = request.toEntity();
+        user.encodePassword(passwordEncoder);
+        userRepository.save(user);
 
-        userRepository.save(entity);
-
-        return entity.getId();
+        return user.getId();
     }
 
     @PostMapping("/users")
     public long registerGeneralUser(@Valid @RequestBody GeneralUserCreateRequest request) {
 
-        GeneralUser entity = request.toEntity();
+        GeneralUser user = request.toEntity();
+        user.encodePassword(passwordEncoder);
+        userRepository.save(user);
 
-        userRepository.save(entity);
-
-        return entity.getId();
+        return user.getId();
     }
 
     @GetMapping("/users")
     public UserResponses allUsers() {
 
-        List<AbstractUser> users = userRepository.findAll();
+        List<User> users = userRepository.findAll();
 
         List<UserResponse> userResponsesCollection = convertUserResponsesCollection(users);
 
@@ -77,20 +75,18 @@ public class UserController {
         String email = request.getEmail();
         String password = request.getPassword();
 
-        AbstractUser foundUser = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("사용자 계정이 존재하지 않습니다"));
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        User foundUser = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("사용자 계정이 존재하지 않습니다"));
 
         if (isSamePassword(password, foundUser)) {
-
             String accessToken = createAccessToken(email);
-
             return new LoginResponse(accessToken);
         }
-        throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+
+        throw new NotMatchPasswordException();
     }
 
     private String createAccessToken(String email) {
+
         return Jwts.builder()
                 .signWith(secretKey, ENCODING_ALGORITHM)
                 .setSubject(email)
@@ -99,8 +95,12 @@ public class UserController {
                 .compact();
     }
 
-    private static boolean isSamePassword(String password, AbstractUser foundUser) {
-        return foundUser.getPassword().equals(password);
+    private boolean isSamePassword(String inputRawPassword, User foundUser) {
+
+        String inputPassword = passwordEncoder.encode(inputRawPassword);
+        String dbPassword = foundUser.getPassword();
+
+        return inputPassword.equals(dbPassword);
     }
 
     public Date createExpirationDateTime() {
@@ -108,23 +108,7 @@ public class UserController {
         return new Date(System.currentTimeMillis() + expirationDurationTime);
     }
 
-    @NoArgsConstructor
-    @Getter
-    @ToString
-    static class LoginRequest {
-        private String email;
-        private String password;
-    }
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @ToString
-    static class LoginResponse {
-        private String accessToken;
-    }
-
-    private static List<UserResponse> convertUserResponsesCollection(List<AbstractUser> users) {
+    private static List<UserResponse> convertUserResponsesCollection(List<User> users) {
 
         return users.stream()
                 .map(UserResponse::new)
