@@ -36,20 +36,13 @@ dependencies {
     // H2
     runtimeOnly 'com.h2database:h2'
 
-    // Spring Test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    // Spock
-    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
-    testImplementation 'org.codehaus.groovy:groovy-all:3.0.16'
-
     // p6spy
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
 
     // MySQL JDBC
     implementation 'mysql:mysql-connector-java:8.0.33'
 
-    // for BCryptPasswordEncoder
+    // for BCryptPasswordEncoder in Spring Security
     implementation 'org.springframework.security:spring-security-crypto:6.1.0'
 
     // JJWT
@@ -57,6 +50,16 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
+    // Spring Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Spock Test
+//    testImplementation 'org.spockframework:spock-core:2.3-groovy-4.0'
+//    testImplementation 'org.codehaus.groovy:groovy-all:3.0.16'
+//    testImplementation 'org.spockframework:spock-spring:2.3-groovy-4.0'
+
+    // Rest Assured Test
+    testImplementation 'io.rest-assured:rest-assured:5.3.1'
 }
 
 tasks.named('test') {

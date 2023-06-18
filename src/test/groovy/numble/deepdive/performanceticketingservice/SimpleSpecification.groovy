@@ -1,3 +1,4 @@
+/*
 package numble.deepdive.performanceticketingservice
 
 import spock.lang.Specification
@@ -12,4 +13,4 @@ class SimpleSpecification extends Specification {
 //        "Kirk".length() == 4
 //        "Scotty".length() == 6
     }
-}
+}*/

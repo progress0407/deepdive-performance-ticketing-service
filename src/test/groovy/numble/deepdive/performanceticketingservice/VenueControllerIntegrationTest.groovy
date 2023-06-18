@@ -1,3 +1,4 @@
+/*
 package numble.deepdive.performanceticketingservice
 
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -47,3 +48,4 @@ class VenueControllerIntegrationTest extends Specification {
         // TODO: Validate the response
     }
 }
+*/
