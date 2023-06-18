@@ -42,8 +42,6 @@ dependencies {
     // Spock
     testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
     testImplementation 'org.codehaus.groovy:groovy-all:3.0.16'
-//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
-//    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 
     // p6spy
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'

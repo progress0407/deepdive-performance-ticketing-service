@@ -3,9 +3,7 @@ package numble.deepdive.performanceticketingservice.user.application;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import numble.deepdive.performanceticketingservice.user.domain.GeneralUser;
 import numble.deepdive.performanceticketingservice.user.domain.User;
-import numble.deepdive.performanceticketingservice.user.dto.LoginResponse;
 import numble.deepdive.performanceticketingservice.user.exception.NotMatchPasswordException;
 import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,13 +28,40 @@ public class UserService {
     @Value("${jwt.expiration-duration-time}")
     private Long expirationDurationTime;
 
-
     public long registerUser(User user) {
 
         user.encodePassword(passwordEncoder);
         userRepository.save(user);
 
         return user.getId();
+    }
+
+    public Date createExpirationDateTime() {
+
+        return new Date(System.currentTimeMillis() + expirationDurationTime);
+    }
+
+    public String login(String email, String inputRawPassword) {
+
+        String dbPassword = foundDbPassword(email);
+
+        if (isSamePassword(inputRawPassword, dbPassword)) {
+            return createAccessToken(email);
+        }
+
+        throw new NotMatchPasswordException();
+    }
+
+    private String foundDbPassword(String email) {
+
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("사용자 계정이 존재하지 않습니다"))
+                .getPassword();
+    }
+
+    private boolean isSamePassword(String inputRawPassword, String dbPassword) {
+
+        return passwordEncoder.matches(inputRawPassword, dbPassword);
     }
 
     private String createAccessToken(String email) {
@@ -47,30 +72,5 @@ public class UserService {
                 .setIssuedAt(new Date())
                 .setExpiration(createExpirationDateTime())
                 .compact();
-    }
-
-    private boolean isSamePassword(String inputRawPassword, User foundUser) {
-
-        String inputPassword = passwordEncoder.encode(inputRawPassword);
-        String dbPassword = foundUser.getPassword();
-
-        return inputPassword.equals(dbPassword);
-    }
-
-    public Date createExpirationDateTime() {
-
-        return new Date(System.currentTimeMillis() + expirationDurationTime);
-    }
-
-    public String login(String email, String password) {
-
-        User foundUser = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("사용자 계정이 존재하지 않습니다"));
-
-        if (isSamePassword(password, foundUser)) {
-            String accessToken = createAccessToken(email);
-            return accessToken;
-        }
-
-        throw new NotMatchPasswordException();
     }
 }

@@ -53,9 +53,9 @@ public class UserController {
     public LoginResponse login(@Valid @RequestBody LoginRequest request) {
 
         String email = request.getEmail();
-        String password = request.getPassword();
+        String inputRawPassword = request.getPassword();
 
-        String accessToken = userService.login(email, password);
+        String accessToken = userService.login(email, inputRawPassword);
 
         return new LoginResponse(accessToken);
     }
