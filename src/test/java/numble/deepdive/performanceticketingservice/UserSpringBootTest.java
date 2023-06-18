@@ -1,10 +1,8 @@
 package numble.deepdive.performanceticketingservice;
 
-import io.restassured.response.ValidatableResponse;
 import numble.deepdive.performanceticketingservice.user.dto.GeneralUserCreateRequest;
 import numble.deepdive.performanceticketingservice.user.dto.LoginRequest;
 import numble.deepdive.performanceticketingservice.user.dto.LoginResponse;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

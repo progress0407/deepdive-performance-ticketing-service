@@ -17,7 +17,7 @@ public class VenueController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VenueCreateResponse createVenue(@RequestBody VenueCreateRequest request, @RequestHeader("X-Authorization") String xAuthorization) {
+    public VenueCreateResponse createVenue(@RequestBody VenueCreateRequest request, @RequestHeader("Authorization") String token) {
 
         // TODO 사용자 토큰 확인. Here we should also validate the user's token.
         Venue entity = request.toEntity();
