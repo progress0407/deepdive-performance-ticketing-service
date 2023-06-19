@@ -33,14 +33,36 @@ public class JwtManager {
                 .compact();
     }
 
-    public String parse(String jws) {
+    public boolean isValidToken(String accessToken) {
+
+        try {
+            tryParseJwt(accessToken);
+        } catch (IllegalArgumentException |
+                 SignatureException |
+                 MalformedJwtException |
+                 ExpiredJwtException |
+                 UnsupportedJwtException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public String parse(String accessToken) {
 
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
-                .parseClaimsJws(jws)
+                .parseClaimsJws(accessToken)
                 .getBody()
                 .getSubject();
+    }
+
+    private void tryParseJwt(String accessToken) {
+
+        Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(accessToken);
     }
 
     private Date createExpirationDateTime() {

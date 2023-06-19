@@ -1,12 +1,14 @@
 package numble.deepdive.performanceticketingservice.global.config;
 
 import io.jsonwebtoken.security.Keys;
+import numble.deepdive.performanceticketingservice.user.config.JwtManager;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class JwtManagerTest {
 
@@ -27,6 +29,21 @@ class JwtManagerTest {
 
         // then
         assertThat(복호화한_값).isEqualTo(원본_문자열);
+    }
+
+    @Test
+    void 토큰의_유효성을_검증한다() {
+        // given
+        String 원본_문자열 = "유일한 어떤 것";
+
+        String 정상_토큰 = jwtManager.createAccessToken(원본_문자열);
+        String 변조된_토큰 = 정상_토큰 + "a";
+
+        // when & then
+        assertAll(
+                () -> assertThat(jwtManager.isValidToken(정상_토큰)).isTrue(),
+                () -> assertThat(jwtManager.isValidToken(변조된_토큰)).isFalse()
+        );
     }
 }
 
