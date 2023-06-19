@@ -21,3 +21,8 @@ Seat가 바뀜에 따라 PerformanceSeat가 바뀔 가능성 또한 적다고 �
 ## 공연장과 공연 예매의 연관 관계
 
 물리적인 연관 X, 예매의 경우 공연장에 대한 히스토리성 성격이 있다고 가정했다
+
+
+## 참고
+
+- [mozza - JVM Memory](https://medium.com/numble-it/jvm-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EA%B4%80%EB%A6%AC-57a97c1f3a82)

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -89,9 +89,10 @@ public class VenueSpringBootTest extends AcceptanceTest {
 
     private VenueCreateRequest createVenueCreateRequest() {
 
-        var seatRequests = new ArrayList<SeatCreateRequest>();
-        seatRequests.add(new SeatCreateRequest("A1", "GENERAL"));
-        seatRequests.add(new SeatCreateRequest("A2", "GENERAL"));
+        var seatRequests = List.of(
+                new SeatCreateRequest("A1", "GENERAL"),
+                new SeatCreateRequest("A2", "GENERAL")
+        );
 
         return new VenueCreateRequest("[테스트 용도] 어떤 한 공연장", seatRequests);
     }
