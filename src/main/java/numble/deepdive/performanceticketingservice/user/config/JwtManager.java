@@ -1,6 +1,8 @@
-package numble.deepdive.performanceticketingservice.global.config;
+package numble.deepdive.performanceticketingservice.user.config;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -10,18 +12,14 @@ import java.util.Date;
 import static io.jsonwebtoken.SignatureAlgorithm.HS512;
 
 @Component
+@RequiredArgsConstructor
 public class JwtManager {
 
     private final static SignatureAlgorithm ENCODING_ALGORITHM = HS512;
 
     private final SecretKey secretKey;
 
-    private final Long expirationDurationTime;
-
-    public JwtManager(SecretKey secretKey, @Value("${jwt.expiration-duration-time}") Long expirationDurationTime) {
-        this.secretKey = secretKey;
-        this.expirationDurationTime = expirationDurationTime;
-    }
+    private final long expirationDurationTime;
 
     public String createAccessToken(String tokenSubject) {
 

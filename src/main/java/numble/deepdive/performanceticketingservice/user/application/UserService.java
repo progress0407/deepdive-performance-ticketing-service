@@ -1,7 +1,7 @@
 package numble.deepdive.performanceticketingservice.user.application;
 
 import lombok.RequiredArgsConstructor;
-import numble.deepdive.performanceticketingservice.global.config.JwtManager;
+import numble.deepdive.performanceticketingservice.user.config.JwtManager;
 import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.user.exception.NotMatchPasswordException;
 import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
