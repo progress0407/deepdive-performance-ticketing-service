@@ -5,16 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-public class SecurityConfiguration implements WebMvcConfigurer {
-
-    private AuthInterceptor authInterceptor;
+public class SecurityConfiguration {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -39,14 +35,5 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     public AuthInterceptor authInterceptor(JwtManager jwtManager) {
 
         return new AuthInterceptor(jwtManager);
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-
-        registry.addInterceptor(authInterceptor)
-                .order(1)
-                .addPathPatterns("/venue/**")
-                .excludePathPatterns("/users/**");
     }
 }

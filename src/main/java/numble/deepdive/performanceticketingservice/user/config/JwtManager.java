@@ -3,15 +3,12 @@ package numble.deepdive.performanceticketingservice.user.config;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS512;
 
-@Component
 @RequiredArgsConstructor
 public class JwtManager {
 

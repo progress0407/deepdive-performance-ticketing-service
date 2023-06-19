@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import numble.deepdive.performanceticketingservice.user.exception.NotMatchPasswordException;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +13,7 @@ public class ExceptionResponse {
 
     private String message;
 
-    public ExceptionResponse(NotMatchPasswordException exception) {
+    public ExceptionResponse(Exception exception) {
         this.message = exception.getMessage();
     }
 }
