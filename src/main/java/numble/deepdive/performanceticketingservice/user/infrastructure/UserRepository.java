@@ -1,7 +1,7 @@
 package numble.deepdive.performanceticketingservice.user.infrastructure;
 
 import numble.deepdive.performanceticketingservice.user.domain.User;
-import numble.deepdive.performanceticketingservice.user.exception.UserNotFoundException;
+import numble.deepdive.performanceticketingservice.auth.exception.UserNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

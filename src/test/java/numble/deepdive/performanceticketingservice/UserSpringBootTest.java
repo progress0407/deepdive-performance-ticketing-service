@@ -1,8 +1,8 @@
 package numble.deepdive.performanceticketingservice;
 
 import numble.deepdive.performanceticketingservice.user.dto.GeneralUserCreateRequest;
-import numble.deepdive.performanceticketingservice.user.dto.LoginRequest;
-import numble.deepdive.performanceticketingservice.user.dto.LoginResponse;
+import numble.deepdive.performanceticketingservice.auth.dto.LoginRequest;
+import numble.deepdive.performanceticketingservice.auth.dto.LoginResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

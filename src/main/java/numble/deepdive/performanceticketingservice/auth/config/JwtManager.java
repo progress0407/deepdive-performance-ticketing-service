@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.user.config;
+package numble.deepdive.performanceticketingservice.auth.config;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;

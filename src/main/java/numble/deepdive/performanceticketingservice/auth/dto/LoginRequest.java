@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.user.dto;
+package numble.deepdive.performanceticketingservice.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

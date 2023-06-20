@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.user.config;
+package numble.deepdive.performanceticketingservice.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-public class SpringMvcConfig implements WebMvcConfigurer {
+public class AuthSpringMvcConfig implements WebMvcConfigurer {
 
     private final AuthInterceptor authInterceptor;
     private final JwtManager jwtManager;

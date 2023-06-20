@@ -48,18 +48,6 @@ public class UserController {
         return new UserResponses(userResponsesCollection);
     }
 
-    @PostMapping("/login")
-    @ResponseStatus(OK)
-    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
-
-        String email = request.getEmail();
-        String inputRawPassword = request.getPassword();
-
-        String accessToken = userService.login(email, inputRawPassword);
-
-        return new LoginResponse(accessToken);
-    }
-
 
     private static List<UserResponse> convertUserResponsesCollection(List<User> users) {
 

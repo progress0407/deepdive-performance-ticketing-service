@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.user.exception;
+package numble.deepdive.performanceticketingservice.auth.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import numble.deepdive.performanceticketingservice.global.exception.ExceptionResponse;

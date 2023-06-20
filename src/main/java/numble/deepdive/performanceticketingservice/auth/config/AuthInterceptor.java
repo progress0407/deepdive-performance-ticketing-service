@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.user.config;
+package numble.deepdive.performanceticketingservice.auth.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,7 +1,7 @@
 package numble.deepdive.performanceticketingservice.global.config;
 
 import io.jsonwebtoken.security.Keys;
-import numble.deepdive.performanceticketingservice.user.config.JwtManager;
+import numble.deepdive.performanceticketingservice.auth.config.JwtManager;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;

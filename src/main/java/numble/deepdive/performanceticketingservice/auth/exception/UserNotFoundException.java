@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.user.exception;
+package numble.deepdive.performanceticketingservice.auth.exception;
 
 import numble.deepdive.performanceticketingservice.global.exception.UnauthorizedException;
 

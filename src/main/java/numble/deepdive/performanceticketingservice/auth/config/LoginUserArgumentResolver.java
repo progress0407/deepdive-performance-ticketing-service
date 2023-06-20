@@ -1,8 +1,9 @@
-package numble.deepdive.performanceticketingservice.user.config;
+package numble.deepdive.performanceticketingservice.auth.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import numble.deepdive.performanceticketingservice.auth.config.JwtManager;
 import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
 import org.springframework.core.MethodParameter;

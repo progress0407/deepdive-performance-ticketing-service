@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.user.exception;
+package numble.deepdive.performanceticketingservice.auth.exception;
 
 public class NotMatchPasswordException extends RuntimeException {
 
