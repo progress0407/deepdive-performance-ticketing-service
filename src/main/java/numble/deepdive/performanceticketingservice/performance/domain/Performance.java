@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
 import numble.deepdive.performanceticketingservice.venue.domain.Seat;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ import static java.util.stream.Collectors.toSet;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString
-public class Performance {
+public class Performance extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

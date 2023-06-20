@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
 import numble.deepdive.performanceticketingservice.performance.domain.Performance;
 import numble.deepdive.performanceticketingservice.venue.domain.Seat;
 import numble.deepdive.performanceticketingservice.venue.domain.SeatType;
@@ -12,8 +13,8 @@ import numble.deepdive.performanceticketingservice.venue.domain.SeatType;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString(exclude = {})
-public class PerformanceSeat {
+@ToString(exclude = {"performance"})
+public class PerformanceSeat extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
