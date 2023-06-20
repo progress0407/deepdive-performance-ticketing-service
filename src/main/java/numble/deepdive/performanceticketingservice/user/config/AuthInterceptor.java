@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import numble.deepdive.performanceticketingservice.global.exception.UnAuthorizationException;
+import numble.deepdive.performanceticketingservice.global.exception.ForbiddenException;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Slf4j
@@ -20,7 +20,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String encodedToken = request.getHeader("Authorization");
+        String encodedToken = extractToken(request);
 
         log.info("access url: {} {}", request.getMethod(), request.getRequestURI());
 
@@ -30,6 +30,10 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        throw new UnAuthorizationException();
+        throw new ForbiddenException();
+    }
+
+    private static String extractToken(HttpServletRequest request) {
+        return request.getHeader("Authorization").replace("Bearer ", "");
     }
 }

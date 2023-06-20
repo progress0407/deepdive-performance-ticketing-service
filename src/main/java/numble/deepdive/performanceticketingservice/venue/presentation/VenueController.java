@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateRequest;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateResponse;
@@ -26,7 +27,9 @@ public class VenueController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VenueCreateResponse createVenue(@RequestBody VenueCreateRequest request, @RequestHeader("Authorization") String token) {
+    public VenueCreateResponse createVenue(@RequestBody VenueCreateRequest request,
+                                           @RequestHeader("Authorization") String token,
+                                           User user) {
 
         // TODO 사용자 토큰 확인. Here we should also validate the user's token.
         Venue entity = request.toEntity();
