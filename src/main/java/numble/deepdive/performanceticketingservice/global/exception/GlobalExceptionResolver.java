@@ -5,15 +5,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionResolver { // TODO 이름 변경
 
-    @ExceptionHandler (UnauthorizedException.class)
+    @ResponseStatus(BAD_REQUEST) // 400
+    @ExceptionHandler (BadRequestException.class)
+    public ExceptionResponse handleBadRequest(RuntimeException exception) {
+
+        log.info("BadRequestException: {}", exception.getMessage());
+
+        return new ExceptionResponse(exception);
+    }
+
     @ResponseStatus(UNAUTHORIZED) // 401
+    @ExceptionHandler (UnauthorizedException.class)
     public ExceptionResponse handleUnauthorized(RuntimeException exception) {
 
         log.info("UnauthorizedException: {}", exception.getMessage());
@@ -21,8 +29,8 @@ public class GlobalExceptionResolver { // TODO 이름 변경
         return new ExceptionResponse(exception);
     }
 
-    @ExceptionHandler (ForbiddenException.class)
     @ResponseStatus(FORBIDDEN) // 403
+    @ExceptionHandler (ForbiddenException.class)
     public ExceptionResponse handleForbidden(RuntimeException exception) {
 
         log.info("NotMatchPasswordException: {}", exception.getMessage());

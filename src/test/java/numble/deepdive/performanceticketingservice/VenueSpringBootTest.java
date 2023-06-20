@@ -42,7 +42,7 @@ public class VenueSpringBootTest extends AcceptanceTest {
         var request = createVenueCreateRequest();
 
         // when
-        var response = post("/venue", request, 사업자_토큰).extract();
+        var response = post("/venues", request, 사업자_토큰).extract();
 
         // then
         long createdId = response.as(VenueCreateResponse.class).getId();
@@ -59,7 +59,7 @@ public class VenueSpringBootTest extends AcceptanceTest {
         var request = createVenueCreateRequest();
 
         // when
-        var response = post("/venue", request, 일반_유저_토큰).extract();
+        var response = post("/venues", request, 일반_유저_토큰).extract();
 
         HTTP코드_검증(response, BAD_REQUEST);
     }
@@ -70,20 +70,20 @@ public class VenueSpringBootTest extends AcceptanceTest {
     }
 
     private String 사업자_로그인_후_토큰_반환() {
-        return post("/login", new LoginRequest("philz_biz@gmail.com", "password")).extract().as(LoginResponse.class).getAccessToken();
+        return post("/login", new LoginRequest("test_biz_user@gmail.com", "password")).extract().as(LoginResponse.class).getAccessToken();
     }
 
     private String 일반_유저_로그인_후_토큰_반환() {
-        return post("/login", new LoginRequest("philz@gmail.com", "password")).extract().as(LoginResponse.class).getAccessToken();
+        return post("/login", new LoginRequest("test_user@gmail.com", "password")).extract().as(LoginResponse.class).getAccessToken();
     }
 
     private void 사업자_회원가입() {
-        var businessUserCreateRequest = new BusinessUserCreateRequest("philz_biz@gmail.com", "sw cho", "password", "1234-5678");
+        var businessUserCreateRequest = new BusinessUserCreateRequest("test_biz_user@gmail.com", "sw cho", "password", "1234-5678");
         registerBusinessUser(businessUserCreateRequest);
     }
 
     private void 일반_회원가입() {
-        var generalUserCreateRequest = new GeneralUserCreateRequest("philz@gmail.com", "sw cho", "password");
+        var generalUserCreateRequest = new GeneralUserCreateRequest("test_user@gmail.com", "sw cho", "password");
         registerSampleUser(generalUserCreateRequest);
     }
 

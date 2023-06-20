@@ -28,12 +28,11 @@ public class VenueController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public VenueCreateResponse createVenue(@RequestBody VenueCreateRequest request,
-                                           @RequestHeader("Authorization") String token,
                                            User user) {
 
         // TODO 사용자 토큰 확인. Here we should also validate the user's token.
         Venue entity = request.toEntity();
-        long savedId = venueService.createVenue(entity);
+        long savedId = venueService.createVenue(entity, user);
 
         return new VenueCreateResponse(savedId);
     }

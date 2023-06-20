@@ -9,6 +9,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import support.DataCleaner;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AcceptanceTest {
 
@@ -27,8 +29,8 @@ public class AcceptanceTest {
     protected ValidatableResponse post(final String uri, final Object requestBody) {
         return RestAssured.given().log().all()
                 .body(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().post(uri)
                 .then().log().all();
     }
@@ -37,15 +39,15 @@ public class AcceptanceTest {
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
                 .body(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().post(uri)
                 .then().log().all();
     }
 
     protected ValidatableResponse get(final String uri) {
         return RestAssured.given().log().all()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().get(uri)
                 .then().log().all();
     }
@@ -53,7 +55,7 @@ public class AcceptanceTest {
     protected ValidatableResponse get(final String uri, final String token) {
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().get(uri)
                 .then().log().all();
     }
@@ -62,8 +64,8 @@ public class AcceptanceTest {
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
                 .body(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().put(uri)
                 .then().log().all();
     }
@@ -71,8 +73,8 @@ public class AcceptanceTest {
     protected ValidatableResponse delete(final String uri, final String token) {
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().delete(uri)
                 .then().log().all();
     }
@@ -81,8 +83,8 @@ public class AcceptanceTest {
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
                 .body(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().delete(uri)
                 .then().log().all();
     }

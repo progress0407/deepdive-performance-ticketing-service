@@ -2,6 +2,7 @@ package numble.deepdive.performanceticketingservice.venue.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 
 import static java.util.Arrays.stream;
 
@@ -18,8 +19,8 @@ public enum SeatType {
     public static SeatType from(String seatTypeString) {
 
         return stream(values())
-                .filter(type -> type.getName().equals(seatTypeString))
+                .filter(type -> type.name().equalsIgnoreCase(seatTypeString))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 좌석 타입입니다."));
+                .orElseThrow(() -> new BadRequestException("잘못된 좌석 타입입니다. : " + seatTypeString));
     }
 }
