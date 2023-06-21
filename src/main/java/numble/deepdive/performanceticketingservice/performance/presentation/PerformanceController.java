@@ -5,17 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.performance.domain.Performance;
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCreateRequest;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
+import numble.deepdive.performanceticketingservice.user.domain.GeneralUser;
+import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -32,10 +33,16 @@ public class PerformanceController {
     private final PerformanceRepository performanceRepository;
 
     @PostMapping("/performances")
-    public long registerPerformance(@Valid @RequestBody PerformanceCreateRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public long registerPerformance(@Valid @RequestBody PerformanceCreateRequest request,
+                                    User user) {
+
+        if (user instanceof GeneralUser) {
+            throw new BadRequestException("일반 사용자는 공연장을 등록할 수 없습니다.");
+        }
 
         Long venueId = request.getVenueId();
-        Venue venue = venueRepository.findById(venueId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 공연장입니다."));
+        Venue venue = venueRepository.findById(venueId).orElseThrow(() -> new BadRequestException("존재하지 않는 공연장입니다."));
         List<VenueSeat> seats = venue.getSeats();
 
         Performance performance = request.toEntity(venueId);
@@ -80,7 +87,7 @@ public class PerformanceController {
             this.startTime = performance.getStartTime();
             this.endTime = performance.getEndTime();
             this.general_seat_price = performance.getGeneralSeatPrice();
-            this.business_seat_price = performance.getBusinessSeatPrice();
+            this.business_seat_price = performance.getVipSeatPrice();
         }
     }
 

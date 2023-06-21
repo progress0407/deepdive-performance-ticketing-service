@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
+import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.venue.domain.SeatType;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 
@@ -23,6 +24,9 @@ public class PerformanceSeat extends BaseEntity {
 
     private SeatType seatType;
 
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus;
+
     @JoinColumn(name = "performance_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Performance performance;
@@ -31,5 +35,19 @@ public class PerformanceSeat extends BaseEntity {
         this.seatNumber = seat.getSeatNumber();
         this.seatType = seat.getSeatType();
         this.performance = performance;
+    }
+
+    public long calculatePriceAndGet() {
+        if (seatType == SeatType.GENERAL) {
+            return performance.getGeneralSeatPrice();
+        } else if (seatType == SeatType.VIP) {
+            return performance.getVipSeatPrice();
+        } else {
+            throw new BadRequestException("존재하지 않는 좌석 타입입니다.");
+        }
+    }
+
+    public boolean isBooked() {
+        return BookingStatus.BOOKED == bookingStatus;
     }
 }

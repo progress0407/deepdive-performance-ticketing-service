@@ -1,9 +1,12 @@
 package numble.deepdive.performanceticketingservice.venue.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 
@@ -15,12 +18,14 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
 public class VenueCreateRequest {
 
     @NotBlank
     private String name;
 
-    @NotBlank
+    @Valid
+    @NotEmpty
     private List<SeatCreateRequest> seats = new ArrayList<>();
 
     public Venue toEntity() {

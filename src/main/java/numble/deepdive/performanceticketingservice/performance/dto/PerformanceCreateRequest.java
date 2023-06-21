@@ -12,8 +12,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-import static java.lang.Integer.parseInt;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,9 +23,6 @@ public class PerformanceCreateRequest {
 
     @NotNull(message = "이름은 필수입니다.")
     private String name;
-
-    @NotNull(message = "수용 인원는 필수입니다.")
-    private String capacity;
 
     @NotNull(message = "날짜는 필수입니다.")
     private String date;
@@ -46,7 +41,6 @@ public class PerformanceCreateRequest {
         return new Performance(
                 venueId,
                 name,
-                parseInt(capacity),
                 LocalDate.parse(date, dateFormatter),
                 LocalTime.parse(startTime, timeFormatter),
                 LocalTime.parse(endTime, timeFormatter),

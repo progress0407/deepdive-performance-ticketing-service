@@ -48,24 +48,24 @@ public class Performance extends BaseEntity {
     private int generalSeatPrice;
 
     @Column(nullable = false)
-    private int businessSeatPrice;
+    private int vipSeatPrice;
 
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PerformanceSeat> seats = new HashSet<>();
 
-    public Performance(long venueId, String name, int capacity, LocalDate date, LocalTime startTime, LocalTime endTime, int generalSeatPrice, int businessSeatPrice) {
+    public Performance(long venueId, String name, LocalDate date, LocalTime startTime, LocalTime endTime, int generalSeatPrice, int vipSeatPrice) {
         this.venueId = venueId;
         this.name = name;
-        this.capacity = capacity;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.generalSeatPrice = generalSeatPrice;
-        this.businessSeatPrice = businessSeatPrice;
+        this.vipSeatPrice = vipSeatPrice;
     }
 
     public void registerSeats(List<VenueSeat> seats) {
         this.seats = convertAndMapParentRelation(seats);
+        this.capacity = seats.size();
     }
 
     /**

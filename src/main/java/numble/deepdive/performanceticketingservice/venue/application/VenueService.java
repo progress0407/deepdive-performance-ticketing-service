@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.user.domain.GeneralUser;
 import numble.deepdive.performanceticketingservice.user.domain.User;
-import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
+import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
