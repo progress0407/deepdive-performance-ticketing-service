@@ -1,14 +1,15 @@
 package numble.deepdive.performanceticketingservice.venue.presentation;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.user.domain.User;
+import numble.deepdive.performanceticketingservice.venue.application.VenueService;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateRequest;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateResponse;
-import numble.deepdive.performanceticketingservice.venue.application.VenueService;
 import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,17 +28,15 @@ public class VenueController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VenueCreateResponse createVenue(@RequestBody VenueCreateRequest request,
+    public VenueCreateResponse createVenue(@Valid @RequestBody VenueCreateRequest request,
                                            User user) {
 
-        // TODO 사용자 토큰 확인. Here we should also validate the user's token.
         Venue entity = request.toEntity();
         long savedId = venueService.createVenue(entity, user);
 
         return new VenueCreateResponse(savedId);
     }
 
-    // TODO GetMapping
     @GetMapping
     public VenueListResponses findAllVenues() {
 
@@ -50,6 +49,7 @@ public class VenueController {
         return new VenueListResponses(venueCollections);
     }
 
+    @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     public static class VenueListResponse {

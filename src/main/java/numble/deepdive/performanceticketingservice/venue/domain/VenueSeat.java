@@ -11,7 +11,7 @@ import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @ToString(exclude = {"venue"})
-public class Seat extends BaseEntity {
+public class VenueSeat extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class Seat extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Venue venue;
 
-    public Seat(String seatNumber, String seatType) {
+    public VenueSeat(String seatNumber, String seatType) {
         this.seatNumber = seatNumber;
         this.seatType = SeatType.from(seatType);
     }

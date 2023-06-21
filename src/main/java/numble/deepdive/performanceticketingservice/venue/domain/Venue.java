@@ -23,9 +23,9 @@ public class Venue extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Seat> seats = new ArrayList<>();
+    private List<VenueSeat> seats = new ArrayList<>();
 
-    public Venue(String name, List<Seat> seats) {
+    public Venue(String name, List<VenueSeat> seats) {
         this.name = name;
         this.seats = seats;
     }

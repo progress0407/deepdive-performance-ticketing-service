@@ -1,17 +1,20 @@
 package numble.deepdive.performanceticketingservice.performance.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import numble.deepdive.performanceticketingservice.performance.domain.Performance;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-import static java.time.LocalTime.parse;
+import static java.lang.Integer.parseInt;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
@@ -40,6 +43,15 @@ public class PerformanceCreateRequest {
     public Performance toEntity(long venueId) {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return new Performance(venueId, name, Integer.valueOf(capacity), LocalDate.parse(date, dateFormatter), parse(startTime, timeFormatter), parse(endTime, timeFormatter), gradeToPrice);
+        return new Performance(
+                venueId,
+                name,
+                parseInt(capacity),
+                LocalDate.parse(date, dateFormatter),
+                LocalTime.parse(startTime, timeFormatter),
+                LocalTime.parse(endTime, timeFormatter),
+                gradeToPrice.get("VIP"),
+                gradeToPrice.get("일반")
+        );
     }
 }
