@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.user.domain.BusinessUser;
+import numble.deepdive.performanceticketingservice.user.domain.User;
 
 @NoArgsConstructor
 @Getter

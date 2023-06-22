@@ -11,9 +11,13 @@ import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,18 +30,18 @@ public class VenueCreateRequest {
 
     @Valid
     @NotEmpty
-    private List<SeatCreateRequest> seats = new ArrayList<>();
+    private Set<SeatCreateRequest> seats = new HashSet<>();
 
     public Venue toEntity() {
 
-        List<VenueSeat> seats = convertSeats();
+        Set<VenueSeat> seats = convertSeats();
 
         return new Venue(name, seats);
     }
 
-    private List<VenueSeat> convertSeats() {
+    private Set<VenueSeat> convertSeats() {
         return seats.stream()
                 .map(SeatCreateRequest::toEntity)
-                .collect(toList());
+                .collect(toSet());
     }
 }

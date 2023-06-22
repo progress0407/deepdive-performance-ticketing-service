@@ -10,6 +10,8 @@ import numble.deepdive.performanceticketingservice.venue.application.VenueServic
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateRequest;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateResponse;
+import numble.deepdive.performanceticketingservice.venue.dto.VenueListResponse;
+import numble.deepdive.performanceticketingservice.venue.dto.VenueListResponses;
 import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -47,29 +49,5 @@ public class VenueController {
                 .collect(toList());
 
         return new VenueListResponses(venueCollections);
-    }
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    public static class VenueListResponse {
-
-        private long id;
-        private String name;
-        private int seatCount;
-
-        public VenueListResponse(Venue venue) {
-            this.id = venue.getId();
-            this.name = venue.getName();
-            this.seatCount = venue.getSeats().size();
-        }
-    }
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    public static class VenueListResponses {
-
-        private List<VenueListResponse> venues;
     }
 }

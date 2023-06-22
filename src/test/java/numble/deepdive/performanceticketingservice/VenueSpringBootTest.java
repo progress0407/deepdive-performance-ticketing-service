@@ -1,12 +1,9 @@
 package numble.deepdive.performanceticketingservice;
 
-import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
-import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateRequest;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateResponse;
+import numble.deepdive.performanceticketingservice.venue.dto.VenueListResponses;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -30,40 +27,33 @@ public class VenueSpringBootTest extends AcceptanceTest {
     }
 
     @Test
-    void 사업자는_공연장_등록이_가능하다() {
+    void 일반_유저는_공연장_등록이_불가능하다() {
         // given
-        var request = createVenueCreateRequest();
+        var httpBody = venueCreateRequest();
 
         // when
-        var response = post("/venues", request, 사업자_토큰).extract();
+        var response = post("/venues", httpBody, 일반_유저_토큰).extract();
 
-        // then
-        long createdId = response.as(VenueCreateResponse.class).getId();
-
-        assertAll(
-                () -> HTTP코드_검증(response, CREATED),
-                () -> assertThat(createdId).isPositive()
-        );
+        assertThat(response.statusCode()).isEqualTo(BAD_REQUEST.value());
     }
 
     @Test
-    void 일반_유저는_공연장_등록이_불가능하다() {
+    void 사업자는_공연장_등록이_가능하다() {
         // given
-        var request = createVenueCreateRequest();
+        var httpBody = venueCreateRequest();
 
         // when
-        var response = post("/venues", request, 일반_유저_토큰).extract();
+        var response = post("/venues", httpBody, 사업자_토큰).extract();
 
-        HTTP코드_검증(response, BAD_REQUEST);
-    }
+        // then
+        long createdId = response.as(VenueCreateResponse.class).getId();
+        var responseBody = get("/venues", 사업자_토큰).extract().as(VenueListResponses.class);
+        int responseSeatCount = responseBody.getVenues().get(0).getSeatCount();
 
-    private VenueCreateRequest createVenueCreateRequest() {
-
-        var seatRequests = List.of(
-                new SeatCreateRequest("A1", "GENERAL"),
-                new SeatCreateRequest("A2", "GENERAL")
+        assertAll(
+                () -> assertThat(response.statusCode()).isEqualTo(CREATED.value()),
+                () -> assertThat(createdId).isPositive(),
+                () -> assertThat(responseSeatCount).isEqualTo(4)
         );
-
-        return new VenueCreateRequest("[테스트 용도] 어떤 한 공연장", seatRequests);
     }
 }

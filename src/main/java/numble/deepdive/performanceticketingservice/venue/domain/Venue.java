@@ -1,14 +1,10 @@
 package numble.deepdive.performanceticketingservice.venue.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,9 +19,9 @@ public class Venue extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<VenueSeat> seats = new ArrayList<>();
+    private Set<VenueSeat> seats = new HashSet<>();
 
-    public Venue(String name, List<VenueSeat> seats) {
+    public Venue(String name, Set<VenueSeat> seats) {
         this.name = name;
         this.seats = seats;
     }

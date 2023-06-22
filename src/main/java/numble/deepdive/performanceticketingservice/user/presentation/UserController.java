@@ -4,14 +4,19 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.user.application.UserService;
 import numble.deepdive.performanceticketingservice.user.domain.User;
-import numble.deepdive.performanceticketingservice.user.dto.*;
+import numble.deepdive.performanceticketingservice.user.dto.BusinessUserCreateRequest;
+import numble.deepdive.performanceticketingservice.user.dto.GeneralUserCreateRequest;
+import numble.deepdive.performanceticketingservice.user.dto.UserResponse;
+import numble.deepdive.performanceticketingservice.user.dto.UserResponses;
 import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor

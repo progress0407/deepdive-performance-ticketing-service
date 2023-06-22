@@ -1,15 +1,13 @@
 package numble.deepdive.performanceticketingservice.venue.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@EqualsAndHashCode(callSuper = false)
 @ToString(exclude = {"venue"})
 public class VenueSeat extends BaseEntity {
 
@@ -24,6 +22,7 @@ public class VenueSeat extends BaseEntity {
 
     @JoinColumn(name = "venue_id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
     private Venue venue;
 
     public VenueSeat(String seatNumber, String seatType) {
