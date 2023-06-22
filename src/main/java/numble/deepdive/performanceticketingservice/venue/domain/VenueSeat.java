@@ -29,4 +29,8 @@ public class VenueSeat extends BaseEntity {
         this.seatNumber = seatNumber;
         this.seatType = SeatType.from(seatType);
     }
+
+    public void mapVenue(Venue venue) {
+        this.venue = venue;
+    }
 }

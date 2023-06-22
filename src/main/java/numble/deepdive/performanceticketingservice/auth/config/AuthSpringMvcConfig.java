@@ -23,7 +23,7 @@ public class AuthSpringMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .order(1)
                 .addPathPatterns("/venues/**")
-                .excludePathPatterns("/users/**");
+                .excludePathPatterns("/users/**", "/login/**");
     }
 
     @Override

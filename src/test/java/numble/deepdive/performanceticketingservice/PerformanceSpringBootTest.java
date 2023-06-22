@@ -55,10 +55,12 @@ public class PerformanceSpringBootTest extends AcceptanceTest {
         PerformanceListResponses responseBody = get("/performances", 사업자_토큰).extract().as(PerformanceListResponses.class);
 
         // then
+        int capacity = responseBody.getPerformances().get(0).getCapacity();
+
         assertAll(
                 () -> assertThat(createResponse.statusCode()).isEqualTo(CREATED.value()),
                 () -> assertThat(공연_ID).isPositive(),
-                () -> assertThat(responseBody.getPerformances().get(0).getCapacity()).isEqualTo(2)
+                () -> assertThat(capacity).isEqualTo(4)
         );
     }
 }

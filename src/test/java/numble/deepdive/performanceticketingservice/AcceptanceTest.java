@@ -5,6 +5,7 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
 import numble.deepdive.performanceticketingservice.auth.dto.LoginRequest;
 import numble.deepdive.performanceticketingservice.auth.dto.LoginResponse;
@@ -25,6 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +48,9 @@ public class AcceptanceTest {
     @Autowired
     DataCleaner dataCleaner;
 
+    @Autowired
+    DataSource dataSource;
+
 //    @PostConstruct
 //    public void init() {
 //        dataCleaner = new DataCleaner(entityManager);
@@ -56,6 +61,7 @@ public class AcceptanceTest {
     protected void setUp() {
         RestAssured.port = port;
         dataCleaner.execute();
+        System.out.println("dataSource = " + dataSource);
     }
 
     protected ValidatableResponse post(final String uri, final Object requestBody) {
@@ -150,16 +156,16 @@ public class AcceptanceTest {
         );
     }
 
-    protected void 사업자_회원가입() {
-
-        var businessUserCreateRequest = new BusinessUserCreateRequest("test_biz_user@gmail.com", "sw cho", "password", "1234-5678");
-        registerBusinessUser(businessUserCreateRequest);
-    }
-
     protected void 일반_회원가입() {
 
         var generalUserCreateRequest = new GeneralUserCreateRequest("test_user@gmail.com", "sw cho", "password");
         registerSampleUser(generalUserCreateRequest);
+    }
+
+    protected void 사업자_회원가입() {
+
+        var businessUserCreateRequest = new BusinessUserCreateRequest("test_biz_user@gmail.com", "sw cho", "password", "1234-5678");
+        registerBusinessUser(businessUserCreateRequest);
     }
 
     protected String 사업자_로그인_후_토큰_반환() {

@@ -10,13 +10,9 @@ import lombok.ToString;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 @AllArgsConstructor
@@ -41,7 +37,7 @@ public class VenueCreateRequest {
 
     private Set<VenueSeat> convertSeats() {
         return seats.stream()
-                .map(SeatCreateRequest::toEntity)
+                .map(seatCreateRequest -> seatCreateRequest.toEntity())
                 .collect(toSet());
     }
 }

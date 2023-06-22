@@ -9,8 +9,8 @@ values (1, 'A1', 'VIP', 1, now(), now())
      , (4, 'B2', 'GENERAL', 1, now(), now());
 
 -- user
-insert into users(id, name, email, password, user_type, created_at, updated_at)
-values (1, 'philz', 'pro@gmail.com', '1234', 'GENERAL', now(), now());
+-- insert into users(id, name, email, password, user_type, created_at, updated_at)
+-- values (1, 'philz', 'pro@gmail.com', '1234', 'GENERAL', now(), now());
 
-insert into general_users (id)
-values (1);
+-- insert into general_users (id)
+-- values (1);

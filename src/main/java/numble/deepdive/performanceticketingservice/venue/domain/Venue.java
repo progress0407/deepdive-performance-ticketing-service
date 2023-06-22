@@ -24,5 +24,8 @@ public class Venue extends BaseEntity {
     public Venue(String name, Set<VenueSeat> seats) {
         this.name = name;
         this.seats = seats;
+        for (VenueSeat seat : seats) {
+            seat.mapVenue(this);
+        }
     }
 }

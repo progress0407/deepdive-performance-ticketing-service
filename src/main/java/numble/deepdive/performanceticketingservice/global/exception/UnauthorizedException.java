@@ -9,6 +9,13 @@ public class UnauthorizedException extends RuntimeException {
     private final static HttpStatus httpStatus = UNAUTHORIZED;
 
     public UnauthorizedException(String message) {
-        super("[401] 권한이 없습니다.");
+        super(selectMessage(message));
+    }
+
+    private static String selectMessage(String message) {
+        if (message.isBlank()) {
+            return "[401] 권한이 없습니다.";
+        }
+        return message;
     }
 }

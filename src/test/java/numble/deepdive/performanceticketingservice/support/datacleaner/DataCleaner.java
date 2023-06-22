@@ -35,7 +35,7 @@ public class DataCleaner {
 
         for (TableTuple tuple : tableTuples) {
             truncate(tuple);
-            resetIncrementedId(tuple);
+//            resetIncrementedId(tuple);
         }
 
         setReferentialIntegrity();
@@ -53,7 +53,11 @@ public class DataCleaner {
                 .executeUpdate();
     }
 
-    // 증가된 ID를 원래 상태로 되돌려놓는다
+    /**
+     * 증가된 ID를 원래 상태로 되돌려놓는다
+     * <br>
+     * mysql 에서는 auto_increment 를 1로 초기화하는 방법이 없다
+     */
     private void resetIncrementedId(TableTuple tableTuple) {
 
         entityManager

@@ -1,0 +1,18 @@
+# TODO: turn off OSIV
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/numble-performance-ticketing-test?useSSL=false&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false
+    username: numble
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+  sql.init.mode: always
+
+jwt:
+  secret-key: "token secret value abcdefgh 1234567890 abcdefgh 1234567890 abcdefgh 1234567890 abcdefgh 1234567890"
+  expiration-duration-time: 86400000 # one day
