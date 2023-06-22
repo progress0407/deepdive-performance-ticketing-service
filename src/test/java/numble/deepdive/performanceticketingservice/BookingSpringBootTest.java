@@ -36,7 +36,7 @@ public class BookingSpringBootTest extends AcceptanceTest {
     @Test
     void 사업자는_공연_예매를_할수없다() {
         // given
-        BookingCreateRequest httpBody = bookingCreateRequest(공연_ID);
+        var httpBody = bookingCreateRequest(공연_ID);
 
         // when
         var response = post("/bookings", httpBody, 사업자_토큰).extract();
@@ -49,14 +49,13 @@ public class BookingSpringBootTest extends AcceptanceTest {
     @Test
     void 일반인은_공연_예매가_가능하다() {
         // given
-        BookingCreateRequest httpBody = bookingCreateRequest(공연_ID);
+        var httpBody = bookingCreateRequest(공연_ID);
 
         // when
         var response = post("/bookings", httpBody, 일반_유저_토큰).extract();
         long 예매_ID = response.as(BookingCreateResponse.class).getId();
 
         // then
-
         assertAll(
                 () -> assertThat(response.statusCode()).isEqualTo(CREATED.value()),
                 () -> assertThat(예매_ID).isPositive()
