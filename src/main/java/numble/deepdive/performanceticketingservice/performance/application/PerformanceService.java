@@ -3,7 +3,6 @@ package numble.deepdive.performanceticketingservice.performance.application;
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.performance.domain.Performance;
-import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCreateRequest;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
 import numble.deepdive.performanceticketingservice.user.domain.GeneralUser;
 import numble.deepdive.performanceticketingservice.user.domain.User;
@@ -17,18 +16,17 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class PerformanceService {
 
     private final VenueRepository venueRepository;
     private final PerformanceRepository performanceRepository;
 
+    @Transactional
     public void createPerformance(long venueId, Performance performance, User user) {
 
         if (user instanceof GeneralUser) {
             throw new BadRequestException("일반 사용자는 공연장을 등록할 수 없습니다.");
         }
-
 
         Venue venue = venueRepository.findAggregateByIdOrThrow(venueId);
         Set<VenueSeat> seats = venue.getSeats();

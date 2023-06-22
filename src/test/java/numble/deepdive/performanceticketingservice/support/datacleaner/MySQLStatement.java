@@ -17,7 +17,12 @@ public class MySQLStatement extends DialectStatement {
     @Override
     public String truncate(TableTuple tableTuple) {
 
-        return String.format("TRUNCATE TABLE %s;", tableTuple.name);
+        // id 초기화와 관련된 이슈 있음 (테스트 격리)
+//        String statement = String.format("TRUNCATE TABLE %s;", tableTuple.name);
+
+        String statement = String.format("DELETE FROM %s;", tableTuple.name);
+
+        return statement;
     }
 
     @Override
