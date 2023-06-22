@@ -19,7 +19,7 @@ import java.util.Map;
 public class PerformanceCreateRequest {
 
     @NotNull(message = "공연장은 필수입니다.")
-    private Long venueId;
+    private long venueId;
 
     @NotNull(message = "이름은 필수입니다.")
     private String name;

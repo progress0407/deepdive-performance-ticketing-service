@@ -63,7 +63,7 @@ public class Performance extends BaseEntity {
         this.vipSeatPrice = vipSeatPrice;
     }
 
-    public void registerSeats(List<VenueSeat> seats) {
+    public void registerSeats(Set<VenueSeat> seats) {
         this.seats = convertAndMapParentRelation(seats);
         this.capacity = seats.size();
     }
@@ -73,7 +73,8 @@ public class Performance extends BaseEntity {
      * <br>
      * 부모와의 연관관계를 매핑합니다
      */
-    private Set<PerformanceSeat> convertAndMapParentRelation(List<VenueSeat> seats) {
+    private Set<PerformanceSeat> convertAndMapParentRelation(Set<VenueSeat> seats) {
+
         return seats.stream()
                 .map(seat -> new PerformanceSeat(seat, this))
                 .collect(toSet());

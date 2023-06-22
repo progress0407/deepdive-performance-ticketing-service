@@ -1,3 +1,5 @@
+package numble.deepdive.performanceticketingservice
+/*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -6,7 +8,7 @@ import spock.lang.Specification
 
 @AutoConfigureMockMvc
 @WebMvcTest
-class SomeSpecification extends Specification {
+class numble.deepdive.performanceticketingservice.SomeSpecification extends Specification {
 
 
     @Autowired
@@ -18,4 +20,4 @@ class SomeSpecification extends Specification {
         expect:
         1 == 1
     }
-}
+}*/
