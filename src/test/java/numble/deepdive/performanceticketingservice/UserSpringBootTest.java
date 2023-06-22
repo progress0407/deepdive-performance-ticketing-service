@@ -12,7 +12,7 @@ public class UserSpringBootTest extends AcceptanceTest {
 
     @Override
     @BeforeEach
-    void setUp() {
+    protected void setUp() {
         super.setUp();
         var request = new GeneralUserCreateRequest("philz@gmail.com", "sw cho", "password");
         registerSampleUser(request);
@@ -26,10 +26,5 @@ public class UserSpringBootTest extends AcceptanceTest {
         LoginResponse response = post("/login", loginRequest).extract().as(LoginResponse.class);
 
         assertThat(response.getAccessToken()).isNotBlank();
-    }
-
-    private void registerSampleUser(GeneralUserCreateRequest request) {
-
-        post("/users", request);
     }
 }
