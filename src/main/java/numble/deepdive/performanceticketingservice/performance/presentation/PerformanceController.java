@@ -3,6 +3,7 @@ package numble.deepdive.performanceticketingservice.performance.presentation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
+import numble.deepdive.performanceticketingservice.performance.application.PerformanceService;
 import numble.deepdive.performanceticketingservice.performance.domain.Performance;
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCreateRequest;
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCreateResponse;
@@ -25,10 +26,9 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
-@Transactional
 public class PerformanceController {
 
-    private final VenueRepository venueRepository;
+    private final PerformanceService performanceService;
     private final PerformanceRepository performanceRepository;
 
     @PostMapping("/performances")
@@ -36,18 +36,9 @@ public class PerformanceController {
     public PerformanceCreateResponse registerPerformance(@Valid @RequestBody PerformanceCreateRequest request,
                                                          User user) {
 
-        if (user instanceof GeneralUser) {
-            throw new BadRequestException("일반 사용자는 공연장을 등록할 수 없습니다.");
-        }
-
         long venueId = request.getVenueId();
-        Venue venue = venueRepository.findAggregateByIdOrThrow(venueId);
-        Set<VenueSeat> seats = venue.getSeats();
-
         Performance performance = request.toEntity(venueId);
-        performance.registerSeats(seats);
-
-        performanceRepository.save(performance);
+        performanceService.createPerformance(venueId, performance, user);
 
         return new PerformanceCreateResponse(performance.getId());
     }
@@ -59,7 +50,7 @@ public class PerformanceController {
 
         List<PerformanceListResponse> performanceCollections = performances.stream()
                 .map(PerformanceListResponse::new)
-                .collect(toList());
+                .toList();
 
         return new PerformanceListResponses(performanceCollections);
     }
