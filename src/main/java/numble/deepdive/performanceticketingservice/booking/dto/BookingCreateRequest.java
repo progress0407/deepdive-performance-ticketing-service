@@ -16,6 +16,6 @@ public class BookingCreateRequest {
 
     private long performanceId;
     private List<SeatCreateRequest> seats;
-    private int totalPrice;
+    private long totalPrice;
     private PaymentInfoCreateRequest paymentInfo;
 }

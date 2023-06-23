@@ -14,8 +14,10 @@ public class UserSpringBootTest extends AcceptanceTest {
     @BeforeEach
     protected void setUp() {
         super.setUp();
-        var request = new GeneralUserCreateRequest("philz@gmail.com", "sw cho", "password");
-        registerSampleUser(request);
+
+        var httpBody = new GeneralUserCreateRequest("philz@gmail.com", "sw cho", "password");
+
+        registerSampleUser(httpBody);
     }
 
     @Test

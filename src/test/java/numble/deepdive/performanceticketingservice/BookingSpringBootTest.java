@@ -2,9 +2,14 @@ package numble.deepdive.performanceticketingservice;
 
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateResponse;
+import numble.deepdive.performanceticketingservice.booking.dto.PaymentInfoCreateRequest;
+import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -62,38 +67,64 @@ public class BookingSpringBootTest extends AcceptanceTest {
         );
     }
 
-    @Disabled
-    @Test
-    void 동일시간대에_같은_좌석을_예매할_수_없다() {
-        // given
-        var httpBody = bookingCreateRequest(공연장_ID);
-
-        // when
-
-
-        // then
-
-    }
-
-    @Disabled
-    @Test
-    void 동일시간대일지라도_다른_좌석이라면_예매할_수_있다() {
-        // given
-
-        // when
-
-        // then
-
-    }
-
-    @Disabled
     @Test
     void 예매표의_가격과_공연에서_제시한_가격은_다를수없다() {
         // given
+        var 잘못된_가격 = 1_000;
+        var httpBody = bookingWrongTotalPriceCreateRequest(공연_ID, 잘못된_가격);
 
         // when
+        var response = post("/bookings", httpBody, 일반_유저_토큰).extract();
 
         // then
+        예외_검증(BAD_REQUEST, "총 가격이 일치하지 않습니다.", response);
+    }
 
+    @Test
+    void 동일_공연의_같은_좌석을_예매할_수_없다() {
+        // given
+        var httpBody1 = bookingCreateRequest(공연_ID, Map.of("A1", "VIP", "B1", "GENERAL"), 60_000);
+        var httpBody2 = bookingCreateRequest(공연_ID, Map.of("A1", "VIP"), 50_000);
+
+        // when
+        post("/bookings", httpBody1, 일반_유저_토큰).extract();
+        var response = post("/bookings", httpBody2, 일반_유저_토큰).extract();
+
+
+        // then
+        예외_검증(BAD_REQUEST, "이미 예약된 좌석이 포함되어 있습니다.", response);
+    }
+
+    @Test
+    void 동일_공연의_다른_좌석은_예매할_수_있다() {
+        // given
+        var httpBody1 = bookingCreateRequest(공연_ID, Map.of("A1", "VIP", "B1", "GENERAL"), 60_000);
+        var httpBody2 = bookingCreateRequest(공연_ID, Map.of("A2", "VIP"), 50_000);
+
+        // when
+        post("/bookings", httpBody1, 일반_유저_토큰).extract();
+        var response = post("/bookings", httpBody2, 일반_유저_토큰).extract();
+        long 예매_ID = response.as(BookingCreateResponse.class).getId();
+
+
+        // then
+        assertAll(
+                () -> assertThat(response.statusCode()).isEqualTo(CREATED.value()),
+                () -> assertThat(예매_ID).isPositive()
+        );
+
+    }
+
+    protected BookingCreateRequest bookingWrongTotalPriceCreateRequest(long performanceId) {
+
+        var seatRequests = List.of(
+                new SeatCreateRequest("A1", "VIP"),
+                new SeatCreateRequest("B1", "GENERAL")
+        );
+
+        var paymentInfoCreateRequest =
+                new PaymentInfoCreateRequest("credit_card", "1234 5678 9012 3456", "12/24", 890);
+
+        return new BookingCreateRequest(performanceId, seatRequests, 10_000 + 50_000, paymentInfoCreateRequest);
     }
 }

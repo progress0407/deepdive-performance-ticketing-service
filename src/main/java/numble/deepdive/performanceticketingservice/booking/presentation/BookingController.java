@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,11 +27,11 @@ public class BookingController {
     private final BookingRepository bookingRepository;
 
     @PostMapping("/bookings")
-    @ResponseStatus(OK)
+    @ResponseStatus(CREATED)
     public BookingCreateResponse bookPerformance(@Valid @RequestBody BookingCreateRequest request, User user) {
 
         long performanceId = request.getPerformanceId();
-        int totalPriceRequest = request.getTotalPrice();
+        long totalPriceRequest = request.getTotalPrice();
         PaymentInfo paymentInfo = convertPaymentInfo(request);
         List<String> seatNumbers = extractSeatNumbers(request);
 

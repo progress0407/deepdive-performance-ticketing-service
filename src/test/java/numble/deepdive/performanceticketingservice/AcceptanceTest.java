@@ -5,7 +5,6 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
 import numble.deepdive.performanceticketingservice.auth.dto.LoginRequest;
 import numble.deepdive.performanceticketingservice.auth.dto.LoginResponse;
@@ -178,9 +177,9 @@ public class AcceptanceTest {
         return post("/login", new LoginRequest("test_user@gmail.com", "password")).extract().as(LoginResponse.class).getAccessToken();
     }
 
-    protected void registerSampleUser(GeneralUserCreateRequest request) {
+    protected void registerSampleUser(GeneralUserCreateRequest httpBody) {
 
-        post("/users", request);
+        post("/users", httpBody);
     }
 
     protected void registerBusinessUser(BusinessUserCreateRequest request) {
@@ -232,5 +231,30 @@ public class AcceptanceTest {
                 new PaymentInfoCreateRequest("credit_card", "1234 5678 9012 3456", "12/24", 890);
 
         return new BookingCreateRequest(performanceId, seatRequests, 10_000 + 50_000, paymentInfoCreateRequest);
+    }
+
+    protected BookingCreateRequest bookingCreateRequest(long performanceId, Map<String, String> seatRequestsMap, long totalPrice) {
+
+        var seatRequests = seatRequestsMap.entrySet().stream()
+                .map(e -> new SeatCreateRequest(e.getKey(), e.getValue()))
+                .toList();
+
+        var paymentInfoCreateRequest =
+                new PaymentInfoCreateRequest("credit_card", "1234 5678 9012 3456", "12/24", 890);
+
+        return new BookingCreateRequest(performanceId, seatRequests, totalPrice, paymentInfoCreateRequest);
+    }
+
+    protected BookingCreateRequest bookingWrongTotalPriceCreateRequest(long performanceId, long wrongTotalPrice) {
+
+        var seatRequests = List.of(
+                new SeatCreateRequest("A1", "VIP"),
+                new SeatCreateRequest("B1", "GENERAL")
+        );
+
+        var paymentInfoCreateRequest =
+                new PaymentInfoCreateRequest("credit_card", "1234 5678 9012 3456", "12/24", 890);
+
+        return new BookingCreateRequest(performanceId, seatRequests, wrongTotalPrice, paymentInfoCreateRequest);
     }
 }

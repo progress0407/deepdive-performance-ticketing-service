@@ -25,7 +25,7 @@ public class PerformanceSeat extends BaseEntity {
     private SeatType seatType;
 
     @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus;
+    private BookingStatus bookingStatus = BookingStatus.AVAILABLE;
 
     @JoinColumn(name = "performance_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -49,5 +49,9 @@ public class PerformanceSeat extends BaseEntity {
 
     public boolean isBooked() {
         return BookingStatus.BOOKED == bookingStatus;
+    }
+
+    public void markBooked() {
+        bookingStatus = BookingStatus.BOOKED;
     }
 }

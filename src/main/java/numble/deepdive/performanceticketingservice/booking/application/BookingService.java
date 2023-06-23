@@ -3,13 +3,9 @@ package numble.deepdive.performanceticketingservice.booking.application;
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.booking.domain.Booking;
 import numble.deepdive.performanceticketingservice.booking.domain.PaymentInfo;
-import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateRequest;
-import numble.deepdive.performanceticketingservice.booking.dto.PaymentInfoCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.infrastructure.BookingRepository;
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
-import numble.deepdive.performanceticketingservice.performance.domain.Performance;
 import numble.deepdive.performanceticketingservice.performance.domain.PerformanceSeat;
-import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceSeatRepository;
 import numble.deepdive.performanceticketingservice.user.domain.BusinessUser;
 import numble.deepdive.performanceticketingservice.user.domain.User;
@@ -29,10 +25,9 @@ public class BookingService {
     private final PerformanceSeatRepository performanceSeatRepository;
 
     @Transactional
-    public long bookPerformance(long performanceId, PaymentInfo paymentInfo, int totalPriceRequest, List<String> seatNumbers, User user) {
+    public long bookPerformance(long performanceId, PaymentInfo paymentInfo, long totalPriceRequest, List<String> seatNumbers, User user) {
 
-        // 예약하고자 하는 좌석들 find
-        Set<PerformanceSeat> performanceSeats = performanceSeatRepository.findAllByPerformanceIdAndSeatNumberIn(performanceId, seatNumbers);
+        var performanceSeats = findPerformanceSeats(performanceId, seatNumbers);
         long realTotalPrice = calculateRealTotalPrice(performanceSeats);
 
         checkUserAuthorization(user);
@@ -42,8 +37,21 @@ public class BookingService {
         // 정상 흐름
         Booking booking = new Booking(realTotalPrice, paymentInfo);
         bookingRepository.save(booking);
+        markBook(performanceSeats);
 
         return booking.getId();
+    }
+
+    // 예약하고자 하는 좌석들 find
+    private Set<PerformanceSeat> findPerformanceSeats(long performanceId, List<String> seatNumbers) {
+
+        return performanceSeatRepository.findAllByPerformanceIdAndSeatNumberIn(performanceId, seatNumbers);
+    }
+    private static long calculateRealTotalPrice(Set<PerformanceSeat> performanceSeats) {
+
+        return performanceSeats.stream()
+                .mapToLong(PerformanceSeat::calculatePriceAndGet)
+                .sum();
     }
 
     private static void checkUserAuthorization(User user) {
@@ -55,7 +63,7 @@ public class BookingService {
     /**
      * 가격 일치 여부 확인
      */
-    private static void checkPriceSame(int totalPriceRequest, long realTotalPrice) {
+    private static void checkPriceSame(long totalPriceRequest, long realTotalPrice) {
 
         if (realTotalPrice != totalPriceRequest) {
             throw new BadRequestException("총 가격이 일치하지 않습니다.");
@@ -81,10 +89,9 @@ public class BookingService {
                 .collect(toSet());
     }
 
-    private static long calculateRealTotalPrice(Set<PerformanceSeat> performanceSeats) {
-
-        return performanceSeats.stream()
-                .mapToLong(PerformanceSeat::calculatePriceAndGet)
-                .sum();
+    private static void markBook(Set<PerformanceSeat> performanceSeats) {
+        for (PerformanceSeat performanceSeat : performanceSeats) {
+            performanceSeat.markBooked();
+        }
     }
 }
