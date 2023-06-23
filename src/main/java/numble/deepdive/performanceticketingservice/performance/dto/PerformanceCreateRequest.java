@@ -44,8 +44,8 @@ public class PerformanceCreateRequest {
                 LocalDate.parse(date, dateFormatter),
                 LocalTime.parse(startTime, timeFormatter),
                 LocalTime.parse(endTime, timeFormatter),
-                gradeToPrice.get("VIP"),
-                gradeToPrice.get("일반")
+                gradeToPrice.get("일반"),
+                gradeToPrice.get("VIP")
         );
     }
 }
