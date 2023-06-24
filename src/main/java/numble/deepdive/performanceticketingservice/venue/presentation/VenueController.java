@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.user.domain.User;
+import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import numble.deepdive.performanceticketingservice.venue.application.VenueService;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateRequest;
@@ -31,10 +32,10 @@ public class VenueController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public VenueCreateResponse createVenue(@Valid @RequestBody VenueCreateRequest request,
-                                           User user) {
+                                           UserCache userCache) {
 
         Venue entity = request.toEntity();
-        long savedId = venueService.createVenue(entity, user);
+        long savedId = venueService.createVenue(entity, userCache);
 
         return new VenueCreateResponse(savedId);
     }

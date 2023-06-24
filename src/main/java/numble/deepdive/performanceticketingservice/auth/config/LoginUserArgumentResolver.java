@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import numble.deepdive.performanceticketingservice.user.domain.User;
+import numble.deepdive.performanceticketingservice.user.dto.UserCache;
+import numble.deepdive.performanceticketingservice.user.infrastructure.UserCacheRepository;
 import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -11,20 +13,23 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+/**
+ * 로그인한 사용자에 대해 User를 반환하는 ArgumentResolver
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final JwtManager jwtManager;
-    private final UserRepository userRepository; // TODO Redis Cache로 변경할 것
+    private final UserCacheRepository userCacheRepository;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
 
         Class<?> parameterType = parameter.getParameterType();
-        boolean isUserType = User.class.isAssignableFrom(parameterType);
+        boolean isUserCacheType = UserCache.class.isAssignableFrom(parameterType);
 
-        return isUserType;
+        return isUserCacheType;
     }
 
     @Override
@@ -37,7 +42,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         String accessToken = extractToken(httpServletRequest);
         String email = jwtManager.parse(accessToken);
 
-        return userRepository.findByEmailOrThrow(email);
+        return userCacheRepository.findUser(email);
     }
 
     private static String extractToken(HttpServletRequest request) {

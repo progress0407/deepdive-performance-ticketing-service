@@ -1,7 +1,7 @@
 package numble.deepdive.performanceticketingservice.auth.config;
 
 import lombok.RequiredArgsConstructor;
-import numble.deepdive.performanceticketingservice.user.infrastructure.UserRepository;
+import numble.deepdive.performanceticketingservice.user.infrastructure.UserCacheRepository;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,7 +15,7 @@ public class AuthSpringMvcConfig implements WebMvcConfigurer {
 
     private final AuthInterceptor authInterceptor;
     private final JwtManager jwtManager;
-    private final UserRepository userRepository;
+    private final UserCacheRepository userCacheRepository;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -29,6 +29,6 @@ public class AuthSpringMvcConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 
-        resolvers.add(new LoginUserArgumentResolver(jwtManager, userRepository));
+        resolvers.add(new LoginUserArgumentResolver(jwtManager, userCacheRepository));
     }
 }

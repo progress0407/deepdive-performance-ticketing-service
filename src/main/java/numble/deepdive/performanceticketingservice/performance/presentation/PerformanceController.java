@@ -10,6 +10,7 @@ import numble.deepdive.performanceticketingservice.performance.dto.PerformanceLi
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceListResponses;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
 import numble.deepdive.performanceticketingservice.user.domain.User;
+import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +26,11 @@ public class PerformanceController {
     @PostMapping("/performances")
     @ResponseStatus(HttpStatus.CREATED)
     public PerformanceCreateResponse registerPerformance(@Valid @RequestBody PerformanceCreateRequest request,
-                                                         User user) {
+                                                         UserCache userCache) {
 
         long venueId = request.getVenueId();
         Performance performance = request.toEntity(venueId);
-        performanceService.createPerformance(venueId, performance, user);
+        performanceService.createPerformance(venueId, performance, userCache);
 
         return new PerformanceCreateResponse(performance.getId());
     }

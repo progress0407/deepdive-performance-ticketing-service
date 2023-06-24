@@ -62,6 +62,9 @@ dependencies {
 
     // Rest Assured Test
     testImplementation 'io.rest-assured:rest-assured:5.3.1'
+
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

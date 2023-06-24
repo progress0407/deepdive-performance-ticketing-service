@@ -7,8 +7,7 @@ import numble.deepdive.performanceticketingservice.booking.infrastructure.Bookin
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.performance.domain.PerformanceSeat;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceSeatRepository;
-import numble.deepdive.performanceticketingservice.user.domain.BusinessUser;
-import numble.deepdive.performanceticketingservice.user.domain.User;
+import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +24,12 @@ public class BookingService {
     private final PerformanceSeatRepository performanceSeatRepository;
 
     @Transactional
-    public long bookPerformance(long performanceId, PaymentInfo paymentInfo, long totalPriceRequest, List<String> seatNumbers, User user) {
+    public long bookPerformance(long performanceId, PaymentInfo paymentInfo, long totalPriceRequest, List<String> seatNumbers, UserCache userCache) {
 
         var performanceSeats = findPerformanceSeats(performanceId, seatNumbers);
         long realTotalPrice = calculateRealTotalPrice(performanceSeats);
 
-        checkUserAuthorization(user);
+        checkUserAuthorization(userCache);
         checkPriceSame(totalPriceRequest, realTotalPrice);
         checkAlreadyBookedSeats(performanceSeats);
 
@@ -42,11 +41,14 @@ public class BookingService {
         return booking.getId();
     }
 
+
     // 예약하고자 하는 좌석들 find
     private Set<PerformanceSeat> findPerformanceSeats(long performanceId, List<String> seatNumbers) {
 
         return performanceSeatRepository.findAllByPerformanceIdAndSeatNumberIn(performanceId, seatNumbers);
     }
+
+
     private static long calculateRealTotalPrice(Set<PerformanceSeat> performanceSeats) {
 
         return performanceSeats.stream()
@@ -54,11 +56,14 @@ public class BookingService {
                 .sum();
     }
 
-    private static void checkUserAuthorization(User user) {
-        if (user instanceof BusinessUser) {
+
+    private static void checkUserAuthorization(UserCache userCache) {
+
+        if (userCache.isBusinessUser()) {
             throw new BadRequestException("사업자는 예매를 할 수 없습니다.");
         }
     }
+
 
     /**
      * 가격 일치 여부 확인
@@ -82,12 +87,14 @@ public class BookingService {
         }
     }
 
+
     private static Set<PerformanceSeat> filterAlreadyBookedSeats(Set<PerformanceSeat> performanceSeats) {
 
         return performanceSeats.stream()
                 .filter(PerformanceSeat::isBooked)
                 .collect(toSet());
     }
+
 
     private static void markBook(Set<PerformanceSeat> performanceSeats) {
         for (PerformanceSeat performanceSeat : performanceSeats) {

@@ -8,7 +8,7 @@ import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateRequ
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateResponse;
 import numble.deepdive.performanceticketingservice.booking.dto.PaymentInfoCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.infrastructure.BookingRepository;
-import numble.deepdive.performanceticketingservice.user.domain.User;
+import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,14 +28,14 @@ public class BookingController {
 
     @PostMapping("/bookings")
     @ResponseStatus(CREATED)
-    public BookingCreateResponse bookPerformance(@Valid @RequestBody BookingCreateRequest request, User user) {
+    public BookingCreateResponse bookPerformance(@Valid @RequestBody BookingCreateRequest request, UserCache userCache) {
 
         long performanceId = request.getPerformanceId();
         long totalPriceRequest = request.getTotalPrice();
         PaymentInfo paymentInfo = convertPaymentInfo(request);
         List<String> seatNumbers = extractSeatNumbers(request);
 
-        long bookedId = bookingService.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, user);
+        long bookedId = bookingService.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, userCache);
 
         return new BookingCreateResponse(bookedId);
     }

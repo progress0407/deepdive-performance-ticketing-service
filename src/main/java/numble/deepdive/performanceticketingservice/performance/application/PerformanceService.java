@@ -6,6 +6,7 @@ import numble.deepdive.performanceticketingservice.performance.domain.Performanc
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
 import numble.deepdive.performanceticketingservice.user.domain.GeneralUser;
 import numble.deepdive.performanceticketingservice.user.domain.User;
+import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
@@ -22,11 +23,9 @@ public class PerformanceService {
     private final PerformanceRepository performanceRepository;
 
     @Transactional
-    public void createPerformance(long venueId, Performance performance, User user) {
+    public void createPerformance(long venueId, Performance performance, UserCache userCache) {
 
-        if (user instanceof GeneralUser) {
-            throw new BadRequestException("일반 사용자는 공연장을 등록할 수 없습니다.");
-        }
+        checkUserAuthorization(userCache);
 
         Venue venue = venueRepository.findAggregateByIdOrThrow(venueId);
         Set<VenueSeat> seats = venue.getSeats();
@@ -34,5 +33,12 @@ public class PerformanceService {
         performance.registerSeats(seats);
 
         performanceRepository.save(performance);
+    }
+
+    private static void checkUserAuthorization(UserCache userCache) {
+
+        if (userCache.isGeneralUser()) {
+            throw new BadRequestException("일반 사용자는 공연을 등록할 수 없습니다.");
+        }
     }
 }
