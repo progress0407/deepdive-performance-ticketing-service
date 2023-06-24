@@ -3,11 +3,13 @@ package numble.deepdive.performanceticketingservice.booking.application;
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.booking.domain.Booking;
 import numble.deepdive.performanceticketingservice.booking.domain.PaymentInfo;
+import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateEvent;
 import numble.deepdive.performanceticketingservice.booking.infrastructure.BookingRepository;
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.performance.domain.PerformanceSeat;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceSeatRepository;
 import numble.deepdive.performanceticketingservice.user.dto.UserCache;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class BookingService {
 
     private final BookingRepository bookingRepository;
     private final PerformanceSeatRepository performanceSeatRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public long bookPerformance(long performanceId, PaymentInfo paymentInfo, long totalPriceRequest, List<String> seatNumbers, UserCache userCache) {
@@ -37,6 +40,8 @@ public class BookingService {
         Booking booking = new Booking(realTotalPrice, paymentInfo);
         bookingRepository.save(booking);
         markBook(performanceSeats);
+
+        eventPublisher.publishEvent(new BookingCreateEvent(this, paymentInfo, realTotalPrice));
 
         return booking.getId();
     }
@@ -75,6 +80,7 @@ public class BookingService {
         }
     }
 
+
     /**
      * 이미 예약이 된 좌석인지 여부
      */
@@ -97,6 +103,7 @@ public class BookingService {
 
 
     private static void markBook(Set<PerformanceSeat> performanceSeats) {
+
         for (PerformanceSeat performanceSeat : performanceSeats) {
             performanceSeat.markBooked();
         }

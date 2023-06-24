@@ -44,7 +44,9 @@ public class BookingController {
 
         PaymentInfoCreateRequest dto = request.getPaymentInfo();
 
-        return new PaymentInfo(dto.getPaymentMethod(), dto.getCardNumber(), dto.getCardExpiration(), dto.getCardCVV());
+        PaymentInfo paymentInfo = dto.toEntity();
+
+        return paymentInfo;
     }
 
     private static List<String> extractSeatNumbers(BookingCreateRequest request) {

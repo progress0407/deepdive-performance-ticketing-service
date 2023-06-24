@@ -52,6 +52,6 @@ public class PerformanceSeat extends BaseEntity {
     }
 
     public void markBooked() {
-        bookingStatus = BookingStatus.BOOKED;
+        this.bookingStatus = BookingStatus.BOOKED;
     }
 }

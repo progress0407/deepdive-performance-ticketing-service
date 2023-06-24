@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import numble.deepdive.performanceticketingservice.booking.domain.PaymentInfo;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,4 +15,9 @@ public class PaymentInfoCreateRequest {
     private String cardNumber;
     private String cardExpiration;
     private int cardCVV;
+
+    public PaymentInfo toEntity() {
+
+        return new PaymentInfo(paymentMethod, cardNumber, cardExpiration, cardCVV);
+    }
 }
