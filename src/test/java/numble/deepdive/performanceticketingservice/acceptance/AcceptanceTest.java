@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice;
+package numble.deepdive.performanceticketingservice.acceptance;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;

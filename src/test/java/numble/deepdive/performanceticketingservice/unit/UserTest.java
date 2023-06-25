@@ -1,5 +1,7 @@
-package numble.deepdive.performanceticketingservice.user.domain;
+package numble.deepdive.performanceticketingservice.unit;
 
+import numble.deepdive.performanceticketingservice.user.domain.GeneralUser;
+import numble.deepdive.performanceticketingservice.user.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice;
+package numble.deepdive.performanceticketingservice.acceptance;
 
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCreateRequest;
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCreateResponse;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
-public class PerformanceSpringBootTest extends AcceptanceTest {
+public class PerformanceAcceptanceTest extends AcceptanceTest {
 
     String 일반_유저_토큰;
     String 사업자_토큰;

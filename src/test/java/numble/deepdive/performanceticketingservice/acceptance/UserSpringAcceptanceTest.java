@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice;
+package numble.deepdive.performanceticketingservice.acceptance;
 
 import numble.deepdive.performanceticketingservice.user.dto.GeneralUserCreateRequest;
 import numble.deepdive.performanceticketingservice.auth.dto.LoginRequest;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserSpringBootTest extends AcceptanceTest {
+public class UserSpringAcceptanceTest extends AcceptanceTest {
 
     @Override
     @BeforeEach

@@ -1,5 +1,7 @@
-package numble.deepdive.performanceticketingservice.performance.domain;
+package numble.deepdive.performanceticketingservice.unit;
 
+import numble.deepdive.performanceticketingservice.performance.domain.Performance;
+import numble.deepdive.performanceticketingservice.performance.domain.PerformanceSeat;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 import org.junit.jupiter.api.Test;
 

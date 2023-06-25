@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.global.config;
+package numble.deepdive.performanceticketingservice.unit;
 
 import io.jsonwebtoken.security.Keys;
 import numble.deepdive.performanceticketingservice.auth.config.JwtManager;

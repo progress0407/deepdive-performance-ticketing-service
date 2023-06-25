@@ -1,11 +1,10 @@
-package numble.deepdive.performanceticketingservice;
+package numble.deepdive.performanceticketingservice.acceptance;
 
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateResponse;
 import numble.deepdive.performanceticketingservice.booking.dto.PaymentInfoCreateRequest;
 import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
-public class BookingSpringBootTest extends AcceptanceTest {
+public class BookingAcceptanceTest extends AcceptanceTest {
 
     String 일반_유저_토큰;
     String 사업자_토큰;
