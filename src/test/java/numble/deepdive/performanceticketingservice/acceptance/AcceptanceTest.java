@@ -60,7 +60,7 @@ public class AcceptanceTest {
     @BeforeEach
     protected void setUp() {
         RestAssured.port = port;
-        dataCleaner.execute();
+//        dataCleaner.execute();
 
     }
 

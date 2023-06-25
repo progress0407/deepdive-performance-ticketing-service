@@ -52,7 +52,13 @@ public class Performance extends BaseEntity {
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PerformanceSeat> seats = new HashSet<>();
 
-    public Performance(long venueId, String name, LocalDate date, LocalTime startTime, LocalTime endTime, int generalSeatPrice, int vipSeatPrice) {
+    public Performance(long venueId,
+                       String name,
+                       LocalDate date,
+                       LocalTime startTime,
+                       LocalTime endTime,
+                       int generalSeatPrice,
+                       int vipSeatPrice) {
         this.venueId = venueId;
         this.name = name;
         this.date = date;

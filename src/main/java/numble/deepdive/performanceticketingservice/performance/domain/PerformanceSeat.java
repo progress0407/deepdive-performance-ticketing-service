@@ -22,6 +22,7 @@ public class PerformanceSeat extends BaseEntity {
 
     private String seatNumber;
 
+    @Enumerated(EnumType.STRING)
     private SeatType seatType;
 
     @Enumerated(EnumType.STRING)
@@ -38,6 +39,7 @@ public class PerformanceSeat extends BaseEntity {
     }
 
     public long calculatePriceAndGet() {
+
         if (seatType == SeatType.GENERAL) {
             return performance.getGeneralSeatPrice();
         } else if (seatType == SeatType.VIP) {
