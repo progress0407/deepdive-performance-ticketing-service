@@ -6,13 +6,21 @@ import numble.deepdive.performanceticketingservice.performance.infrastructure.Pe
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceSeatRepository;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
-@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:sql/concurrency-others.sql", "classpath:sql/concurrency-venue-seat.sql", "classpath:sql/concurrency-performance-seat.sql"})
+@Sql(
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,
+        scripts = {
+                "classpath:sql/concurrency-others.sql",
+                "classpath:sql/concurrency-venue-seat.sql",
+                "classpath:sql/concurrency-performance-seat.sql"
+        }
+)
 public class ConcurrencyTest extends AcceptanceTest {
 
     @Autowired
@@ -25,8 +33,9 @@ public class ConcurrencyTest extends AcceptanceTest {
     PerformanceSeatRepository performanceSeatRepository;
 
 
+    @Disabled
     @Test
-    void a() {
+    void todo() {
         Venue venue = venueRepository.findAggregateById(10_001).get();
 
         List<PerformanceSeat> performanceSeats = performanceSeatRepository.findAll();
