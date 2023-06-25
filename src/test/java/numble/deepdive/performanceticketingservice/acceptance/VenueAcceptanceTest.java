@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
-public class VenueSpringAcceptanceTest extends AcceptanceTest {
+public class VenueAcceptanceTest extends AcceptanceTest {
 
     String 일반_유저_토큰;
     String 사업자_토큰;
@@ -32,7 +32,7 @@ public class VenueSpringAcceptanceTest extends AcceptanceTest {
         var httpBody = venueCreateRequest();
 
         // when
-        var response = post("/venues", httpBody, 일반_유저_토큰).extract();
+        var response = post("/venues", httpBody, 일반_유저_토큰);
 
         assertThat(response.statusCode()).isEqualTo(BAD_REQUEST.value());
     }
@@ -43,11 +43,11 @@ public class VenueSpringAcceptanceTest extends AcceptanceTest {
         var httpBody = venueCreateRequest();
 
         // when
-        var response = post("/venues", httpBody, 사업자_토큰).extract();
+        var response = post("/venues", httpBody, 사업자_토큰);
 
         // then
         long createdId = response.as(VenueCreateResponse.class).getId();
-        var responseBody = get("/venues", 사업자_토큰).extract().as(VenueListResponses.class);
+        var responseBody = get("/venues", 사업자_토큰).as(VenueListResponses.class);
         int responseSeatCount = responseBody.getVenues().get(0).getSeatCount();
 
         assertAll(

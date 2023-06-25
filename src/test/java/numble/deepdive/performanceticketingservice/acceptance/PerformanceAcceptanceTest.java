@@ -37,7 +37,7 @@ public class PerformanceAcceptanceTest extends AcceptanceTest {
         PerformanceCreateRequest httpBody = performanceCreateRequest(공연장_ID);
 
         // when
-        var response = post("/performances", httpBody, 일반_유저_토큰).extract();
+        var response = post("/performances", httpBody, 일반_유저_토큰);
 
         // then
         assertThat(response.statusCode()).isEqualTo(BAD_REQUEST.value());
@@ -49,10 +49,10 @@ public class PerformanceAcceptanceTest extends AcceptanceTest {
         PerformanceCreateRequest httpBody = performanceCreateRequest(공연장_ID);
 
         // when
-        var createResponse = post("/performances", httpBody, 사업자_토큰).extract();
+        var createResponse = post("/performances", httpBody, 사업자_토큰);
         PerformanceCreateResponse 생성된_공연 = createResponse.as(PerformanceCreateResponse.class);
         long 공연_ID = 생성된_공연.getId();
-        PerformanceListResponses responseBody = get("/performances", 사업자_토큰).extract().as(PerformanceListResponses.class);
+        PerformanceListResponses responseBody = get("/performances", 사업자_토큰).as(PerformanceListResponses.class);
 
         // then
         int capacity = responseBody.getPerformances().get(0).getCapacity();

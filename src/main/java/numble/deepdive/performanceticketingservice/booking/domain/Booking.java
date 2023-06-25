@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

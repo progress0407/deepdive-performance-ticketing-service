@@ -3,7 +3,7 @@ package numble.deepdive.performanceticketingservice.acceptance;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import numble.deepdive.performanceticketingservice.auth.dto.LoginRequest;
@@ -50,30 +50,34 @@ public class AcceptanceTest {
     @Autowired
     DataSource dataSource;
 
-//    @PostConstruct
-//    public void init() {
+    @PostConstruct
+    public void onlyOneSetup() {
+        System.out.println("dataSource = " + dataSource);
 //        dataCleaner = new DataCleaner(entityManager);
 //        dataCleaner.init();
-//    }
+    }
 
     @BeforeEach
     protected void setUp() {
         RestAssured.port = port;
         dataCleaner.execute();
-        System.out.println("dataSource = " + dataSource);
+
     }
 
-    protected ValidatableResponse post(final String uri, final Object requestBody) {
+
+    protected ExtractableResponse<Response> post(final String uri, final Object requestBody) {
 
         return RestAssured.given().log().all()
                 .body(requestBody)
                 .contentType(APPLICATION_JSON_VALUE)
                 .accept(APPLICATION_JSON_VALUE)
                 .when().post(uri)
-                .then().log().all();
+                .then().log().all()
+                .extract();
     }
 
-    protected ValidatableResponse post(final String uri, final Object requestBody, final String token) {
+
+    protected ExtractableResponse<Response> post(final String uri, final Object requestBody, final String token) {
 
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
@@ -81,27 +85,31 @@ public class AcceptanceTest {
                 .contentType(APPLICATION_JSON_VALUE)
                 .accept(APPLICATION_JSON_VALUE)
                 .when().post(uri)
-                .then().log().all();
+                .then().log().all()
+                .extract();
     }
 
-    protected ValidatableResponse get(final String uri) {
+
+    protected ExtractableResponse<Response> get(final String uri) {
 
         return RestAssured.given().log().all()
                 .accept(APPLICATION_JSON_VALUE)
                 .when().get(uri)
-                .then().log().all();
+                .then().log().all()
+                .extract();
     }
 
-    protected ValidatableResponse get(final String uri, final String token) {
+    protected ExtractableResponse<Response> get(final String uri, final String token) {
 
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
                 .accept(APPLICATION_JSON_VALUE)
                 .when().get(uri)
-                .then().log().all();
+                .then().log().all()
+                .extract();
     }
 
-    protected ValidatableResponse put(final String uri, final Object requestBody, final String token) {
+    protected ExtractableResponse<Response> put(final String uri, final Object requestBody, final String token) {
 
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
@@ -109,27 +117,30 @@ public class AcceptanceTest {
                 .contentType(APPLICATION_JSON_VALUE)
                 .accept(APPLICATION_JSON_VALUE)
                 .when().put(uri)
-                .then().log().all();
+                .then().log().all()
+                .extract();
     }
 
-    protected ValidatableResponse delete(final String uri, final String token) {
+    protected ExtractableResponse<Response> delete(final String uri, final String token) {
 
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
                 .contentType(APPLICATION_JSON_VALUE)
                 .accept(APPLICATION_JSON_VALUE)
                 .when().delete(uri)
-                .then().log().all();
+                .then().log().all()
+                .extract();
     }
 
-    protected ValidatableResponse delete(final String uri, final Object requestBody, final String token) {
+    protected ExtractableResponse<Response> delete(final String uri, final Object requestBody, final String token) {
         return RestAssured.given().log().all()
                 .auth().oauth2(token)
                 .body(requestBody)
                 .contentType(APPLICATION_JSON_VALUE)
                 .accept(APPLICATION_JSON_VALUE)
                 .when().delete(uri)
-                .then().log().all();
+                .then().log().all()
+                .extract();
     }
 
     protected static void HTTP코드_검증(ExtractableResponse<Response> response, HttpStatus httpStatus) {
@@ -169,12 +180,12 @@ public class AcceptanceTest {
 
     protected String 사업자_로그인_후_토큰_반환() {
 
-        return post("/login", new LoginRequest("test_biz_user@gmail.com", "password")).extract().as(LoginResponse.class).getAccessToken();
+        return post("/login", new LoginRequest("test_biz_user@gmail.com", "password")).as(LoginResponse.class).getAccessToken();
     }
 
     protected String 일반_유저_로그인_후_토큰_반환() {
 
-        return post("/login", new LoginRequest("test_user@gmail.com", "password")).extract().as(LoginResponse.class).getAccessToken();
+        return post("/login", new LoginRequest("test_user@gmail.com", "password")).as(LoginResponse.class).getAccessToken();
     }
 
     protected void registerSampleUser(GeneralUserCreateRequest httpBody) {
@@ -189,12 +200,12 @@ public class AcceptanceTest {
 
     protected VenueCreateResponse 공연장_생성요청(String accessToken) {
 
-        return post("/venues", venueCreateRequest(), accessToken).extract().as(VenueCreateResponse.class);
+        return post("/venues", venueCreateRequest(), accessToken).as(VenueCreateResponse.class);
     }
 
     protected PerformanceCreateResponse 공연_생성요청(long venueId, String accessToken) {
 
-        return post("/performances", performanceCreateRequest(venueId), accessToken).extract().as(PerformanceCreateResponse.class);
+        return post("/performances", performanceCreateRequest(venueId), accessToken).as(PerformanceCreateResponse.class);
     }
 
     protected VenueCreateRequest venueCreateRequest() {

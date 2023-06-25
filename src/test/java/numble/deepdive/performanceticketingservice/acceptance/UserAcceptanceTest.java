@@ -1,14 +1,14 @@
 package numble.deepdive.performanceticketingservice.acceptance;
 
-import numble.deepdive.performanceticketingservice.user.dto.GeneralUserCreateRequest;
 import numble.deepdive.performanceticketingservice.auth.dto.LoginRequest;
 import numble.deepdive.performanceticketingservice.auth.dto.LoginResponse;
+import numble.deepdive.performanceticketingservice.user.dto.GeneralUserCreateRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserSpringAcceptanceTest extends AcceptanceTest {
+public class UserAcceptanceTest extends AcceptanceTest {
 
     @Override
     @BeforeEach
@@ -25,7 +25,7 @@ public class UserSpringAcceptanceTest extends AcceptanceTest {
 
         var loginRequest = new LoginRequest("philz@gmail.com", "password");
 
-        LoginResponse response = post("/login", loginRequest).extract().as(LoginResponse.class);
+        LoginResponse response = post("/login", loginRequest).as(LoginResponse.class);
 
         assertThat(response.getAccessToken()).isNotBlank();
     }

@@ -1,10 +1,14 @@
 package numble.deepdive.performanceticketingservice.venue.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

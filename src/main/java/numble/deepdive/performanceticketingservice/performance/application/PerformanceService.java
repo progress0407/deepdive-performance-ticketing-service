@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.performance.domain.Performance;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
-import numble.deepdive.performanceticketingservice.user.domain.GeneralUser;
-import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;

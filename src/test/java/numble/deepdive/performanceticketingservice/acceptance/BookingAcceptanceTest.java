@@ -1,13 +1,9 @@
 package numble.deepdive.performanceticketingservice.acceptance;
 
-import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateResponse;
-import numble.deepdive.performanceticketingservice.booking.dto.PaymentInfoCreateRequest;
-import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +39,7 @@ public class BookingAcceptanceTest extends AcceptanceTest {
         var httpBody = bookingCreateRequest(공연_ID);
 
         // when
-        var response = post("/bookings", httpBody, 사업자_토큰).extract();
+        var response = post("/bookings", httpBody, 사업자_토큰);
 
         // then
         예외_검증(BAD_REQUEST, "사업자는 예매를 할 수 없습니다.", response);
@@ -56,7 +52,7 @@ public class BookingAcceptanceTest extends AcceptanceTest {
         var httpBody = bookingCreateRequest(공연_ID);
 
         // when
-        var response = post("/bookings", httpBody, 일반_유저_토큰).extract();
+        var response = post("/bookings", httpBody, 일반_유저_토큰);
         long 예매_ID = response.as(BookingCreateResponse.class).getId();
 
         // then
@@ -73,7 +69,7 @@ public class BookingAcceptanceTest extends AcceptanceTest {
         var httpBody = bookingWrongTotalPriceCreateRequest(공연_ID, 잘못된_가격);
 
         // when
-        var response = post("/bookings", httpBody, 일반_유저_토큰).extract();
+        var response = post("/bookings", httpBody, 일반_유저_토큰);
 
         // then
         예외_검증(BAD_REQUEST, "총 가격이 일치하지 않습니다.", response);
@@ -86,8 +82,8 @@ public class BookingAcceptanceTest extends AcceptanceTest {
         var httpBody2 = bookingCreateRequest(공연_ID, Map.of("A1", "VIP"), 50_000);
 
         // when
-        post("/bookings", httpBody1, 일반_유저_토큰).extract();
-        var response = post("/bookings", httpBody2, 일반_유저_토큰).extract();
+        post("/bookings", httpBody1, 일반_유저_토큰);
+        var response = post("/bookings", httpBody2, 일반_유저_토큰);
 
 
         // then
@@ -101,8 +97,8 @@ public class BookingAcceptanceTest extends AcceptanceTest {
         var httpBody2 = bookingCreateRequest(공연_ID, Map.of("A2", "VIP"), 50_000);
 
         // when
-        post("/bookings", httpBody1, 일반_유저_토큰).extract();
-        var response = post("/bookings", httpBody2, 일반_유저_토큰).extract();
+        post("/bookings", httpBody1, 일반_유저_토큰);
+        var response = post("/bookings", httpBody2, 일반_유저_토큰);
         long 예매_ID = response.as(BookingCreateResponse.class).getId();
 
 
@@ -112,18 +108,5 @@ public class BookingAcceptanceTest extends AcceptanceTest {
                 () -> assertThat(예매_ID).isPositive()
         );
 
-    }
-
-    protected BookingCreateRequest bookingWrongTotalPriceCreateRequest(long performanceId) {
-
-        var seatRequests = List.of(
-                new SeatCreateRequest("A1", "VIP"),
-                new SeatCreateRequest("B1", "GENERAL")
-        );
-
-        var paymentInfoCreateRequest =
-                new PaymentInfoCreateRequest("credit_card", "1234 5678 9012 3456", "12/24", 890);
-
-        return new BookingCreateRequest(performanceId, seatRequests, 10_000 + 50_000, paymentInfoCreateRequest);
     }
 }

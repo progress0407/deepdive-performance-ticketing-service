@@ -9,7 +9,6 @@ import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCr
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceListResponse;
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceListResponses;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
-import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

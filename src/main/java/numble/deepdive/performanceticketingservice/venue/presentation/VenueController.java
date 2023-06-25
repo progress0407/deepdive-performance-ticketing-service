@@ -1,11 +1,7 @@
 package numble.deepdive.performanceticketingservice.venue.presentation;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import numble.deepdive.performanceticketingservice.user.domain.User;
 import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import numble.deepdive.performanceticketingservice.venue.application.VenueService;
 import numble.deepdive.performanceticketingservice.venue.domain.Venue;

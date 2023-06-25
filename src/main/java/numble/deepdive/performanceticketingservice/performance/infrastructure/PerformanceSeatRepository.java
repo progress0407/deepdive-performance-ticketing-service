@@ -4,7 +4,6 @@ import numble.deepdive.performanceticketingservice.performance.domain.Performanc
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 public interface PerformanceSeatRepository extends JpaRepository<PerformanceSeat, Long> {
