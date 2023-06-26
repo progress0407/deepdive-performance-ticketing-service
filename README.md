@@ -61,6 +61,20 @@ booking (공연 예약)은 공연 예매를 이용하는 사용자가 이용하�
 도메인 지식에 따라 공연 좌석과 예매의 좌석이 다른 경우도 있겠지만, 이 프로젝트가 가지는 비즈니스상 그럴 필요가 없다고 생각했다  
 
 
+### 동시성 테스트
+
+- 동시성 고려를 하지 않은 경우
+  ![image](https://github.com/progress0407/progress0407/assets/66164361/147d78b3-1a04-4772-8b81-d16df1bd8b59)
+
+기대 예약 개수인 250개 보다 많은 366건이 예약됨을 알 수 있다
+
+- 동시성 처리를 위해 synchronized를 사용한 경우
+![image](https://github.com/progress0407/progress0407.github.io/assets/66164361/160d298f-9b2d-4fd2-a864-ce2c79ad65b2)
+- `java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30014ms.`
+![image](https://github.com/progress0407/progress0407/assets/66164361/9afa3829-1217-42da-9912-a116e6169743)
+Connection Time Out으로 인해 몇건의 예약이 이루어지지 않았음을 알 수 있다
+
+- 
 
 ## 생략한 것
 

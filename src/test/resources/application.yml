@@ -4,6 +4,8 @@ spring:
     url: jdbc:mysql://localhost:3306/numble-performance-ticketing-test?useSSL=false&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false
     username: numble
     password: 1234
+    hikari:
+      connection-timeout: 86400000
   jpa:
     hibernate:
       ddl-auto: create-drop

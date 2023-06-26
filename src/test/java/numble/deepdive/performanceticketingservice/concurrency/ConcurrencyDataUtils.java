@@ -20,8 +20,8 @@ public class ConcurrencyDataUtils {
 
     public static void main(String[] args) {
 
-//        print_venue_seat(1_000);
-        print_performance_seat(1_000);
+//        print_venue_seat(250);
+        print_performance_seat(250);
     }
 
     public static void print_venue_seat(int upperBoundNumber) {

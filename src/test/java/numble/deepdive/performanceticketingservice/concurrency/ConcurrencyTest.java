@@ -54,30 +54,32 @@ public class ConcurrencyTest extends AcceptanceTest {
     @Autowired
     BookingRepository bookingRepository;
 
-    //    @Disabled
     @Test
-    void todo() throws InterruptedException {
+    void 동시_예약을_한_경우에_대해_Thread_Safe한지를_테스트한다() throws InterruptedException {
+        // when
         for (int i = 1; i <= 250; i++) {
 
             String seatNumber = String.format("A%d", i);
             var httpBody = bookingCreateRequest(공연_ID, Map.of(seatNumber, "GENERAL"), 10_000);
 
-            for (int j = 0; j < 4; j++) {
-                latch.countDown();
+            for (int j = 1; j <= 4; j++) {
                 비동기_요청(httpBody);
             }
         }
 
-        latch.await();
-        threadPool.shutdown();
+        latch.await(); // 모든 요청이 끝나기를 기다린다.
+        threadPool.shutdown(); // 쓰레드풀 종료 gracefully
 
+        // then
         long 총_예약_횟수 = bookingRepository.count();
 
-        System.out.println("총_예약_횟수 = " + 총_예약_횟수);
         assertThat(총_예약_횟수).isEqualTo(250);
     }
 
     private void 비동기_요청(BookingCreateRequest httpBody) {
-        threadPool.execute(() -> post("/bookings", httpBody, 일반_유저_토큰));
+        threadPool.execute(() -> {
+            post("/bookings", httpBody, 일반_유저_토큰);
+            latch.countDown();
+        });
     }
 }
