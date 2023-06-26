@@ -85,7 +85,6 @@ public class BookingAcceptanceTest extends AcceptanceTest {
         post("/bookings", httpBody1, 일반_유저_토큰);
         var response = post("/bookings", httpBody2, 일반_유저_토큰);
 
-
         // then
         예외_검증(BAD_REQUEST, "이미 예약된 좌석이 포함되어 있습니다.", response);
     }
@@ -107,6 +106,5 @@ public class BookingAcceptanceTest extends AcceptanceTest {
                 () -> assertThat(response.statusCode()).isEqualTo(CREATED.value()),
                 () -> assertThat(예매_ID).isPositive()
         );
-
     }
 }

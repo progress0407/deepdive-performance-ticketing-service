@@ -13,12 +13,15 @@ import numble.deepdive.performanceticketingservice.booking.dto.PaymentInfoCreate
 import numble.deepdive.performanceticketingservice.global.exception.ExceptionResponse;
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCreateRequest;
 import numble.deepdive.performanceticketingservice.performance.dto.PerformanceCreateResponse;
+import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
 import numble.deepdive.performanceticketingservice.support.datacleaner.DataCleaner;
 import numble.deepdive.performanceticketingservice.user.dto.BusinessUserCreateRequest;
 import numble.deepdive.performanceticketingservice.user.dto.GeneralUserCreateRequest;
 import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateRequest;
 import numble.deepdive.performanceticketingservice.venue.dto.VenueCreateResponse;
+import numble.deepdive.performanceticketingservice.venue.infrastructure.VenueRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,6 +53,13 @@ public class AcceptanceTest {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    VenueRepository venueRepository;
+
+    @Autowired
+    PerformanceRepository performanceRepository;
+
+
     @PostConstruct
     public void onlyOneSetup() {
         System.out.println("dataSource = " + dataSource);
@@ -60,10 +70,12 @@ public class AcceptanceTest {
     @BeforeEach
     protected void setUp() {
         RestAssured.port = port;
-//        dataCleaner.execute();
-
     }
 
+    @AfterEach
+    void tearDown() {
+        dataCleaner.execute();
+    }
 
     protected ExtractableResponse<Response> post(final String uri, final Object requestBody) {
 
@@ -76,7 +88,6 @@ public class AcceptanceTest {
                 .extract();
     }
 
-
     protected ExtractableResponse<Response> post(final String uri, final Object requestBody, final String token) {
 
         return RestAssured.given().log().all()
@@ -88,7 +99,6 @@ public class AcceptanceTest {
                 .then().log().all()
                 .extract();
     }
-
 
     protected ExtractableResponse<Response> get(final String uri) {
 
