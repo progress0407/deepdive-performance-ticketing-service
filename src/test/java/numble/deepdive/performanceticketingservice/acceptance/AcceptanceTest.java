@@ -190,12 +190,12 @@ public class AcceptanceTest {
 
     protected String 사업자_로그인_후_토큰_반환() {
 
-        return post("/login", new LoginRequest("test_biz_user@gmail.com", "password")).as(LoginResponse.class).getAccessToken();
+        return post("/login", new LoginRequest("test_biz_user@gmail.com", "password")).as(LoginResponse.class).accessToken();
     }
 
     protected String 일반_유저_로그인_후_토큰_반환() {
 
-        return post("/login", new LoginRequest("test_user@gmail.com", "password")).as(LoginResponse.class).getAccessToken();
+        return post("/login", new LoginRequest("test_user@gmail.com", "password")).as(LoginResponse.class).accessToken();
     }
 
     protected void registerSampleUser(GeneralUserCreateRequest httpBody) {

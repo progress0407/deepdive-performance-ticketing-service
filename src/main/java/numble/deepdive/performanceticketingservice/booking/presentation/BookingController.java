@@ -6,10 +6,8 @@ import numble.deepdive.performanceticketingservice.booking.application.BookingSe
 import numble.deepdive.performanceticketingservice.booking.domain.PaymentInfo;
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateResponse;
-import numble.deepdive.performanceticketingservice.booking.dto.PaymentInfoCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.infrastructure.BookingRepository;
 import numble.deepdive.performanceticketingservice.user.dto.UserCache;
-import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -31,30 +29,14 @@ public class BookingController {
     @ResponseStatus(CREATED)
     public BookingCreateResponse bookPerformance(@Valid @RequestBody BookingCreateRequest request, UserCache userCache) {
 
-        long performanceId = request.getPerformanceId();
-        long totalPriceRequest = request.getTotalPrice();
-        PaymentInfo paymentInfo = convertPaymentInfo(request);
-        List<String> seatNumbers = extractSeatNumbers(request);
+        long performanceId = request.performanceId();
+        long totalPriceRequest = request.totalPrice();
+        PaymentInfo paymentInfo = request.getPaymentInfoEntity();
+        List<String> seatNumbers = request.extractSeatNumbers();
 
         long bookedId = bookingService.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, userCache);
 //        long bookedId = bookServiceLockProxy.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, userCache);
 
         return new BookingCreateResponse(bookedId);
-    }
-
-    private static PaymentInfo convertPaymentInfo(BookingCreateRequest request) {
-
-        PaymentInfoCreateRequest dto = request.getPaymentInfo();
-
-        PaymentInfo paymentInfo = dto.toEntity();
-
-        return paymentInfo;
-    }
-
-    private static List<String> extractSeatNumbers(BookingCreateRequest request) {
-
-        return request.getSeats().stream()
-                .map(SeatCreateRequest::getSeatNumber)
-                .toList();
     }
 }

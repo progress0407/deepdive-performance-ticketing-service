@@ -46,9 +46,9 @@ public class VenueAcceptanceTest extends AcceptanceTest {
         var response = post("/venues", httpBody, 사업자_토큰);
 
         // then
-        long createdId = response.as(VenueCreateResponse.class).getId();
+        long createdId = response.as(VenueCreateResponse.class).id();
         var responseBody = get("/venues", 사업자_토큰).as(VenueListResponses.class);
-        int responseSeatCount = responseBody.getVenues().get(0).getSeatCount();
+        int responseSeatCount = responseBody.venues().get(0).seatCount();
 
         assertAll(
                 () -> assertThat(response.statusCode()).isEqualTo(CREATED.value()),

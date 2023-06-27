@@ -1,21 +1,26 @@
 package numble.deepdive.performanceticketingservice.booking.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import numble.deepdive.performanceticketingservice.booking.domain.PaymentInfo;
 import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@ToString
-public class BookingCreateRequest {
+public record BookingCreateRequest(
+        long performanceId,
+        List<SeatCreateRequest> seats,
+        long totalPrice,
+        PaymentInfoCreateRequest paymentInfo) {
 
-    private long performanceId;
-    private List<SeatCreateRequest> seats;
-    private long totalPrice;
-    private PaymentInfoCreateRequest paymentInfo;
+    public List<String> extractSeatNumbers() {
+
+        return this.seats().stream()
+                .map(SeatCreateRequest::seatNumber)
+                .toList();
+    }
+
+    public PaymentInfo getPaymentInfoEntity() {
+
+        return paymentInfo.toEntity();
+    }
 }
+

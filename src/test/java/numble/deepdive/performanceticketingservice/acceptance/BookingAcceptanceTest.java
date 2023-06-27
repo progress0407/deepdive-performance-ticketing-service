@@ -29,8 +29,8 @@ public class BookingAcceptanceTest extends AcceptanceTest {
         일반_유저_토큰 = 일반_유저_로그인_후_토큰_반환();
         사업자_토큰 = 사업자_로그인_후_토큰_반환();
 
-        공연장_ID = 공연장_생성요청(사업자_토큰).getId();
-        공연_ID = 공연_생성요청(공연장_ID, 사업자_토큰).getId();
+        공연장_ID = 공연장_생성요청(사업자_토큰).id();
+        공연_ID = 공연_생성요청(공연장_ID, 사업자_토큰).id();
     }
 
     @Test
@@ -53,7 +53,7 @@ public class BookingAcceptanceTest extends AcceptanceTest {
 
         // when
         var response = post("/bookings", httpBody, 일반_유저_토큰);
-        long 예매_ID = response.as(BookingCreateResponse.class).getId();
+        long 예매_ID = response.as(BookingCreateResponse.class).id();
 
         // then
         assertAll(
@@ -98,7 +98,7 @@ public class BookingAcceptanceTest extends AcceptanceTest {
         // when
         post("/bookings", httpBody1, 일반_유저_토큰);
         var response = post("/bookings", httpBody2, 일반_유저_토큰);
-        long 예매_ID = response.as(BookingCreateResponse.class).getId();
+        long 예매_ID = response.as(BookingCreateResponse.class).id();
 
 
         // then

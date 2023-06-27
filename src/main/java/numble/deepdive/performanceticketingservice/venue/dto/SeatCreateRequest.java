@@ -1,23 +1,16 @@
 package numble.deepdive.performanceticketingservice.venue.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@ToString
-public class SeatCreateRequest {
+public record SeatCreateRequest(
 
-    @NotBlank
-    private String seatNumber;
+        @NotBlank
+        String seatNumber,
 
-    @NotBlank
-    private String seatType;
+        @NotBlank
+        String seatType
+) {
 
     public VenueSeat toEntity() {
 

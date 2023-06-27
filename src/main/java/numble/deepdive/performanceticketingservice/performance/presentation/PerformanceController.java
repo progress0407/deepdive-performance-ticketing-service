@@ -27,7 +27,7 @@ public class PerformanceController {
     public PerformanceCreateResponse registerPerformance(@Valid @RequestBody PerformanceCreateRequest request,
                                                          UserCache userCache) {
 
-        long venueId = request.getVenueId();
+        long venueId = request.venueId();
         Performance performance = request.toEntity(venueId);
         performanceService.createPerformance(venueId, performance, userCache);
 

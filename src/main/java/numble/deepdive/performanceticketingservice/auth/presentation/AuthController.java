@@ -22,8 +22,8 @@ public class AuthController {
     @ResponseStatus(OK)
     public LoginResponse login(@Valid @RequestBody LoginRequest request) {
 
-        String email = request.getEmail();
-        String inputRawPassword = request.getPassword();
+        String email = request.email();
+        String inputRawPassword = request.password();
 
         String accessToken = authService.login(email, inputRawPassword);
 

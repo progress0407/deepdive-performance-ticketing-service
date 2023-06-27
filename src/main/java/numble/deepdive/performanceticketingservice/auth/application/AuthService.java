@@ -25,6 +25,7 @@ public class AuthService {
 
         throw new NotMatchPasswordException();
     }
+
     private String findDbPassword(String email) {
 
         return userRepository.findByEmailOrThrow(email)

@@ -1,33 +1,34 @@
 package numble.deepdive.performanceticketingservice.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import numble.deepdive.performanceticketingservice.user.domain.BusinessUser;
 import numble.deepdive.performanceticketingservice.user.domain.User;
 
-@NoArgsConstructor
-@Getter
-@ToString
-public class UserResponse {
+public record UserResponse(
 
-    private String name;
+        String name,
 
-    private String email;
+        String email,
 
-    private String password;
+        String password,
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String businessLicense;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        String businessLicense
+) {
 
     public UserResponse(User user) {
-        this.name = user.getName();
-        this.email = user.getEmail();
-        this.password = user.getPassword();
+        this(
+                user.getName(),
+                user.getEmail(),
+                user.getPassword(),
+                extractBusinessLicense(user)
+        );
+    }
 
-        if(user instanceof BusinessUser) {
-            this.businessLicense = ((BusinessUser) user).getBusinessLicense();
+    private static String extractBusinessLicense(User user) {
+        if (user instanceof BusinessUser) {
+            return ((BusinessUser) user).getBusinessLicense();
         }
+        return null;
     }
 }

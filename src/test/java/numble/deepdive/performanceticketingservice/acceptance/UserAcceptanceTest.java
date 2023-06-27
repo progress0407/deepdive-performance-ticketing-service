@@ -27,6 +27,6 @@ public class UserAcceptanceTest extends AcceptanceTest {
 
         LoginResponse response = post("/login", loginRequest).as(LoginResponse.class);
 
-        assertThat(response.getAccessToken()).isNotBlank();
+        assertThat(response.accessToken()).isNotBlank();
     }
 }

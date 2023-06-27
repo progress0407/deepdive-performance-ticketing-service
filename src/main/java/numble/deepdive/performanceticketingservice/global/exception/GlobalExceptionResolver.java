@@ -12,7 +12,7 @@ import static org.springframework.http.HttpStatus.*;
 public class GlobalExceptionResolver { // TODO 이름 변경
 
     @ResponseStatus(BAD_REQUEST) // 400
-    @ExceptionHandler (BadRequestException.class)
+    @ExceptionHandler(BadRequestException.class)
     public ExceptionResponse handleBadRequest(RuntimeException exception) {
 
         log.info("BadRequestException: {}", exception.getMessage());
@@ -21,7 +21,7 @@ public class GlobalExceptionResolver { // TODO 이름 변경
     }
 
     @ResponseStatus(UNAUTHORIZED) // 401
-    @ExceptionHandler (UnauthorizedException.class)
+    @ExceptionHandler(UnauthorizedException.class)
     public ExceptionResponse handleUnauthorized(RuntimeException exception) {
 
         log.info("UnauthorizedException: {}", exception.getMessage());
@@ -30,7 +30,7 @@ public class GlobalExceptionResolver { // TODO 이름 변경
     }
 
     @ResponseStatus(FORBIDDEN) // 403
-    @ExceptionHandler (ForbiddenException.class)
+    @ExceptionHandler(ForbiddenException.class)
     public ExceptionResponse handleForbidden(RuntimeException exception) {
 
         log.info("NotMatchPasswordException: {}", exception.getMessage());

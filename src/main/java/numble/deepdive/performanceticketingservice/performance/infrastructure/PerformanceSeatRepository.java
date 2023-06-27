@@ -8,6 +8,6 @@ import java.util.Set;
 
 public interface PerformanceSeatRepository extends JpaRepository<PerformanceSeat, Long> {
 
-//    @Lock(value = LockModeType.PESSIMISTIC_WRITE) // 비관적 락
+    //    @Lock(value = LockModeType.PESSIMISTIC_WRITE) // 비관적 락
     Set<PerformanceSeat> findAllByPerformanceIdAndSeatNumberIn(Long performanceId, Collection<String> seatNumber);
 }
