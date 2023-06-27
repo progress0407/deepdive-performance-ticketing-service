@@ -27,7 +27,7 @@ public class BookingService {
     private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
-    synchronized public long bookPerformance(long performanceId, PaymentInfo paymentInfo, long totalPriceRequest, List<String> seatNumbers, UserCache userCache) {
+    public long bookPerformance(long performanceId, PaymentInfo paymentInfo, long totalPriceRequest, List<String> seatNumbers, UserCache userCache) {
 
         var performanceSeats = findPerformanceSeats(performanceId, seatNumbers);
         long realTotalPrice = calculateRealTotalPrice(performanceSeats);
