@@ -2,12 +2,12 @@ package numble.deepdive.performanceticketingservice.booking.presentation;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import numble.deepdive.performanceticketingservice.booking.application.BookingService;
 import numble.deepdive.performanceticketingservice.booking.domain.PaymentInfo;
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateResponse;
 import numble.deepdive.performanceticketingservice.booking.dto.PaymentInfoCreateRequest;
 import numble.deepdive.performanceticketingservice.booking.infrastructure.BookingRepository;
-import numble.deepdive.performanceticketingservice.global.config.BookServiceLockProxy;
 import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import numble.deepdive.performanceticketingservice.venue.dto.SeatCreateRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +23,8 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 public class BookingController {
 
-    //    private final BookingService bookingService;
-    private final BookServiceLockProxy bookServiceLockProxy;
+    private final BookingService bookingService;
+    //    private final BookServiceLockProxy bookServiceLockProxy;
     private final BookingRepository bookingRepository;
 
     @PostMapping("/bookings")
@@ -36,8 +36,8 @@ public class BookingController {
         PaymentInfo paymentInfo = convertPaymentInfo(request);
         List<String> seatNumbers = extractSeatNumbers(request);
 
-//        long bookedId = bookingService.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, userCache);
-        long bookedId = bookServiceLockProxy.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, userCache);
+        long bookedId = bookingService.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, userCache);
+//        long bookedId = bookServiceLockProxy.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, userCache);
 
         return new BookingCreateResponse(bookedId);
     }

@@ -21,7 +21,8 @@ public class ConcurrencyDataUtils {
     public static void main(String[] args) {
 
 //        print_venue_seat(250);
-        print_performance_seat(250);
+//        print_performance_seat(250);
+        print_performance_seat_with_opt_lock(250);
     }
 
     public static void print_venue_seat(int upperBoundNumber) {
@@ -54,6 +55,24 @@ public class ConcurrencyDataUtils {
 
         for (int i = 1; i <= upperBoundNumber; i++) {
             String oneTerm = String.format("(10001, %d, 'A%d', 'GENERAL', 'AVAILABLE', now(), now())", 10000 + i, i);
+            sb.append(oneTerm);
+            appendEndOfStatement(upperBoundNumber, sb, i);
+        }
+
+        out.println(sb);
+        print_end();
+    }
+
+    private static void print_performance_seat_with_opt_lock(int upperBoundNumber) {
+
+        print_start();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("insert into performance_seat(performance_id, id, seat_number, seat_type, booking_status, created_at, updated_at, version)\nvalues ");
+
+        for (int i = 1; i <= upperBoundNumber; i++) {
+            String oneTerm = String.format("(10001, %d, 'A%d', 'GENERAL', 'AVAILABLE', now(), now(), 0)", 10000 + i, i);
             sb.append(oneTerm);
             appendEndOfStatement(upperBoundNumber, sb, i);
         }

@@ -28,6 +28,9 @@ public class PerformanceSeat extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus = BookingStatus.AVAILABLE;
 
+    @Version
+    private long version;
+
     @JoinColumn(name = "performance_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Performance performance;
