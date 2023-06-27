@@ -5,6 +5,7 @@ import numble.deepdive.performanceticketingservice.booking.domain.Booking;
 import numble.deepdive.performanceticketingservice.booking.domain.PaymentInfo;
 import numble.deepdive.performanceticketingservice.booking.dto.BookingCreateEvent;
 import numble.deepdive.performanceticketingservice.booking.infrastructure.BookingRepository;
+import numble.deepdive.performanceticketingservice.global.config.RedisLock;
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.performance.domain.PerformanceSeat;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceSeatRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.stream.Collectors.toSet;
 
 @Service
@@ -26,6 +28,7 @@ public class BookingService {
     private final PerformanceSeatRepository performanceSeatRepository;
     private final ApplicationEventPublisher eventPublisher;
 
+    @RedisLock(key = "book-performance-lock", waitTime = 300, leaseTime = 5, timeUnit = SECONDS)
     @Transactional
     public long bookPerformance(long performanceId, PaymentInfo paymentInfo, long totalPriceRequest, List<String> seatNumbers, UserCache userCache) {
 

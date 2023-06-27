@@ -21,8 +21,8 @@ public class ConcurrencyDataUtils {
     public static void main(String[] args) {
 
 //        print_venue_seat(250);
-//        print_performance_seat(250);
-        print_performance_seat_with_opt_lock(250);
+        print_performance_seat(250);
+//        print_performance_seat_with_opt_lock(250);
     }
 
     public static void print_venue_seat(int upperBoundNumber) {
@@ -83,7 +83,7 @@ public class ConcurrencyDataUtils {
 
     private static void appendEndOfStatement(int upperBoundNumber, StringBuilder sb, int i) {
         if (i == upperBoundNumber) {
-            sb.append("; \n");
+            sb.append(";\n");
         } else {
             sb.append(", \n");
         }

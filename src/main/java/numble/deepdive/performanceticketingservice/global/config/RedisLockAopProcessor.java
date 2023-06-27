@@ -1,34 +1,45 @@
 package numble.deepdive.performanceticketingservice.global.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import numble.deepdive.performanceticketingservice.booking.application.BookingService;
-import numble.deepdive.performanceticketingservice.booking.domain.PaymentInfo;
-import numble.deepdive.performanceticketingservice.user.dto.UserCache;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Aspect
 @Component
 @RequiredArgsConstructor
-public class BookServiceLockProxy {
+@Slf4j
+public class RedisLockAopProcessor {
 
     private final BookingService bookingService;
     private final RedissonClient redissonClient;
 
-    public long bookPerformance(long performanceId, PaymentInfo paymentInfo, long totalPriceRequest, List<String> seatNumbers, UserCache userCache) {
-        String key = "book-performance-lock";
+    @Around("@annotation(redisLock)")
+    public Object doLock(ProceedingJoinPoint joinPoint, RedisLock redisLock) throws Throwable {
+
+        String key = redisLock.key();
+        long waitTime = redisLock.waitTime();
+        long leaseTime = redisLock.leaseTime();
+        TimeUnit timeUnit = redisLock.timeUnit();
+
         RLock rLock = redissonClient.getLock(key);
 
         try {
-            rLock.tryLock(5000, 2000, TimeUnit.MILLISECONDS);
-            return bookingService.bookPerformance(performanceId, paymentInfo, totalPriceRequest, seatNumbers, userCache);
+            rLock.tryLock(waitTime, leaseTime, timeUnit);
+
+            return joinPoint.proceed();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             rLock.unlock();
         }
     }
+
 }
