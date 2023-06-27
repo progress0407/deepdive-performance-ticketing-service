@@ -63,6 +63,9 @@ booking (공연 예약)은 공연 예매를 이용하는 사용자가 이용하�
 
 ### 동시성 테스트
 
+![image](https://github.com/progress0407/progress0407/assets/66164361/0c3a76e9-4762-4718-96bf-74b616332941)
+
+
 - 동시성 고려를 하지 않은 경우
   ![image](https://github.com/progress0407/progress0407/assets/66164361/147d78b3-1a04-4772-8b81-d16df1bd8b59)
 
@@ -70,11 +73,11 @@ booking (공연 예약)은 공연 예매를 이용하는 사용자가 이용하�
 
 - 동시성 처리를 위해 synchronized를 사용한 경우
 ![image](https://github.com/progress0407/progress0407.github.io/assets/66164361/160d298f-9b2d-4fd2-a864-ce2c79ad65b2)
-- `java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30014ms.`
+- 
 ![image](https://github.com/progress0407/progress0407/assets/66164361/9afa3829-1217-42da-9912-a116e6169743)
 Connection Time Out으로 인해 몇건의 예약이 이루어지지 않았음을 알 수 있다
 
-- 
+(그 외 사항은 [개인 블로그](https://progress0407.tistory.com/149)에 정리해두었습니다)
 
 ## 생략한 것
 
