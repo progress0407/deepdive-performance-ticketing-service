@@ -1,6 +1,6 @@
 -- venue and seat
 insert into venue (id, name, created_at, updated_at)
-values (1, '실버스톤 공연장', now(), now());
+values (1, '테스트 공연장', now(), now());
 
 insert into venue_seat (id, seat_number, seat_type, venue_id, created_at, updated_at)
 values (1, 'A1', 'VIP', 1, now(), now())

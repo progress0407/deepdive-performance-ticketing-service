@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.concurrency;
+package numble.deepdive.performanceticketingservice.support.datainit;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -12,32 +12,32 @@ import static java.lang.System.out;
  * <br>
  * 생성된 파일은 src/test/resources/sql/ 하위에 위치합니다.
  * <br>
- * @see ConcurrencyTest
  *
+ * @see ConcurrencyTest
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ConcurrencyDataUtils {
+public class TestConcurrencyDataInitUtils extends AbstractDataInitUtils {
+
 
     public static void main(String[] args) {
 
-//        print_venue_seat(250);
-        print_performance_seat(250);
+        print_venue_seat(10001, 250);
+//        print_performance_seat(250);
 //        print_performance_seat_with_opt_lock(250);
     }
 
-    public static void print_venue_seat(int upperBoundNumber) {
+    public static void print_venue_seat(int venueId, int upperBoundNumber) {
 
         print_start();
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("insert into venue_seat (venue_id, id, seat_number, seat_type, created_at, updated_at)\nvalues ");
+        sb.append(INSERT_INTO_VENUE_SEAT_PREVIOUS_CLAUSE);
 
         for (int i = 1; i <= upperBoundNumber; i++) {
-            String oneTerm = String.format("(10001, %d, 'A%d', 'GENERAL', now(), now())", 10000 + i, i);
-            sb.append(oneTerm);
-            // 문장 마침표 처리
-            appendEndOfStatement(upperBoundNumber, sb, i);
+            String aValue = formatAValue(venueId, "GENERAL", i, 10001);
+            sb.append(aValue);
+            appendEndOfStatement(i, upperBoundNumber, sb);
         }
 
         String result = sb.toString();
@@ -56,7 +56,7 @@ public class ConcurrencyDataUtils {
         for (int i = 1; i <= upperBoundNumber; i++) {
             String oneTerm = String.format("(10001, %d, 'A%d', 'GENERAL', 'AVAILABLE', now(), now())", 10000 + i, i);
             sb.append(oneTerm);
-            appendEndOfStatement(upperBoundNumber, sb, i);
+            appendEndOfStatement(i, upperBoundNumber, sb);
         }
 
         out.println(sb);
@@ -74,36 +74,10 @@ public class ConcurrencyDataUtils {
         for (int i = 1; i <= upperBoundNumber; i++) {
             String oneTerm = String.format("(10001, %d, 'A%d', 'GENERAL', 'AVAILABLE', now(), now(), 0)", 10000 + i, i);
             sb.append(oneTerm);
-            appendEndOfStatement(upperBoundNumber, sb, i);
+            appendEndOfStatement(i, upperBoundNumber, sb);
         }
 
         out.println(sb);
         print_end();
-    }
-
-    private static void appendEndOfStatement(int upperBoundNumber, StringBuilder sb, int i) {
-        if (i == upperBoundNumber) {
-            sb.append(";\n");
-        } else {
-            sb.append(", \n");
-        }
-    }
-
-    private static void print_start() {
-        String string = "\n\n\n" +
-                "=========================================================================\n" +
-                "==================== GENERATE SQL STATEMENT :: START ====================\n" +
-                "=========================================================================" +
-                "\n\n\n";
-        out.println(string);
-    }
-
-    private static void print_end() {
-        String sting = "\n\n\n" +
-                "=======================================================================\n" +
-                "==================== GENERATE SQL STATEMENT :: END ====================\n" +
-                "=======================================================================" +
-                "\n\n\n";
-        out.println(sting);
     }
 }
