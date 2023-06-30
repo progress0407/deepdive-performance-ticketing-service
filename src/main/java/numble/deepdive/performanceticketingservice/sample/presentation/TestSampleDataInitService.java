@@ -1,4 +1,4 @@
-package numble.deepdive.performanceticketingservice.sample;
+package numble.deepdive.performanceticketingservice.sample.presentation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

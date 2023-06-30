@@ -2,7 +2,8 @@ package numble.deepdive.performanceticketingservice.support.datainit;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import numble.deepdive.performanceticketingservice.sample.TestSampleDataInitService;
+import numble.deepdive.performanceticketingservice.sample.application.TestSampleDataInitController;
+import numble.deepdive.performanceticketingservice.sample.presentation.TestSampleDataInitService;
 
 import static java.lang.System.out;
 
@@ -13,7 +14,7 @@ import static java.lang.System.out;
  * <br>
  * 생성된 파일은 src/test/resources/sql/ 하위에 위치합니다.
  * <br>
- *
+ * @see TestSampleDataInitController
  * @see TestSampleDataInitService
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
