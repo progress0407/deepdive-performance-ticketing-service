@@ -35,7 +35,7 @@ public class TestConcurrencyDataInitUtils extends AbstractDataInitUtils {
         sb.append(INSERT_INTO_VENUE_SEAT_PREVIOUS_CLAUSE);
 
         for (int i = 1; i <= upperBoundNumber; i++) {
-            String aValue = formatAValue(venueId, "GENERAL", i, 10001);
+            String aValue = formatVenueSeatValue(venueId, "GENERAL", i, 10001);
             sb.append(aValue);
             appendEndOfStatement(i, upperBoundNumber, sb);
         }

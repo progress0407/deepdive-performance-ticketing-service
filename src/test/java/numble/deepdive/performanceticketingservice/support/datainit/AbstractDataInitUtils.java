@@ -33,10 +33,16 @@ public abstract class AbstractDataInitUtils {
         printInBlue(sting);
     }
 
-    protected static String formatAValue(int venueId, String venueType, int currentIndex, int startSeatNumber) {
+    protected static String formatVenueSeatValue(int venueId, String venueType, int currentIndex, int startSeatNumber) {
 
         return String.format("(%d, %d, 'A%d', '%s', now(), now())",
                 venueId, (startSeatNumber - 1) + currentIndex, currentIndex, venueType);
+    }
+
+    protected static String formatPerformanceSeatValue(int performanceId, String venueType, int startSeatPkNumber, int currentIndex) {
+
+        return String.format("(%d, %d, 'A%d', '%s', 'AVAILABLE', now(), now())",
+                performanceId, (startSeatPkNumber - 1) + currentIndex, currentIndex, venueType);
     }
 
     private static void printInBlue(String string) {
