@@ -13,6 +13,7 @@ public interface VenueRepository extends JpaRepository<Venue, Long> {
     Optional<Venue> findAggregateById(long venueId);
 
     default Venue findAggregateByIdOrThrow(long venueId) {
+
         return findAggregateById(venueId).orElseThrow(() -> new BadRequestException("존재하지 않는 공연장입니다."));
     }
 }

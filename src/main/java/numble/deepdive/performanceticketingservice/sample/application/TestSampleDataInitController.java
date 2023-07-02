@@ -20,8 +20,13 @@ public class TestSampleDataInitController {
     public String testSampleDataInit() {
 
         service.testSampleDataInit("test-sample-data-1-others.sql");
+
         service.testSampleDataInit("test-sample-data-2-venue-seat-silverstone.sql");
         service.testSampleDataInit("test-sample-data-3-venue-seat-monaco.sql");
+
+        service.testSampleDataInit("test-sample-data-4-performance-seat-1.sql");
+        service.testSampleDataInit("test-sample-data-5-performance-seat-2.sql");
+        service.testSampleDataInit("test-sample-data-6-performance-seat-3.sql");
 
         return "test data init success";
     }

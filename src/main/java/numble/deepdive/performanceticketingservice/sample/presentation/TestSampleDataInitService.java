@@ -39,12 +39,14 @@ public class TestSampleDataInitService {
     }
 
     private void executeEachStatement(String[] sqlStatements) {
+
         for (String statement : sqlStatements) {
             jdbcTemplate.execute(statement);
         }
     }
 
     private static String convertResourceToString(Resource resource) {
+
         return new String(getBytes(resource), StandardCharsets.UTF_8);
     }
 
