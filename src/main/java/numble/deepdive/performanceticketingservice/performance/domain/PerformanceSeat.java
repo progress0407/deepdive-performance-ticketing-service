@@ -1,17 +1,16 @@
 package numble.deepdive.performanceticketingservice.performance.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import numble.deepdive.performanceticketingservice.global.entity.BaseEntity;
 import numble.deepdive.performanceticketingservice.global.exception.BadRequestException;
 import numble.deepdive.performanceticketingservice.venue.domain.SeatType;
 import numble.deepdive.performanceticketingservice.venue.domain.VenueSeat;
 
 @Entity
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString(exclude = {"performance"})
 public class PerformanceSeat extends BaseEntity {

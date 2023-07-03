@@ -4,9 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import numble.deepdive.performanceticketingservice.performance.application.PerformanceService;
 import numble.deepdive.performanceticketingservice.performance.domain.Performance;
+import numble.deepdive.performanceticketingservice.performance.domain.PerformanceSeat;
 import numble.deepdive.performanceticketingservice.performance.dto.*;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceQuery;
 import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceRepository;
+import numble.deepdive.performanceticketingservice.performance.infrastructure.PerformanceSeatRepository;
 import numble.deepdive.performanceticketingservice.user.dto.UserCache;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,13 @@ public class PerformanceController {
 
     private final PerformanceService performanceService;
     private final PerformanceRepository performanceRepository;
+    private final PerformanceSeatRepository performanceSeatRepository;
     private final PerformanceQuery performanceQuery;
+//    private final PerformanceSeatMapper performanceSeatMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PerformanceCreateResponse registerPerformance(@Valid @RequestBody PerformanceCreateRequest request,
-                                                         UserCache userCache) {
+    public PerformanceCreateResponse registerPerformance(@Valid @RequestBody PerformanceCreateRequest request, UserCache userCache) {
 
         long venueId = request.venueId();
         Performance performance = request.toEntity(venueId);
@@ -43,20 +46,27 @@ public class PerformanceController {
         return new PerformanceListResponses(performanceCollections);
     }
 
+    @GetMapping("/seats")
+    public PerformanceSeatListResponses findAllPerformanceSeats() {
+
+        List<PerformanceSeat> entities = performanceSeatRepository.findAll();
+        List<PerformanceSeatListResponse> dtos = entities.stream()
+                .map(PerformanceSeatMapper.INSTANCE::toDtoFromEntity)
+                .toList();
+
+        return new PerformanceSeatListResponses(dtos);
+    }
+
     @GetMapping(value = "/stat/by-capacity")
     public PerformanceCapacityStatResponses getStatByCapacity() {
 
-        PerformanceCapacityStatResponses statByCapacity = performanceQuery.getStatByCapacity();
-
-        return statByCapacity;
+        return performanceQuery.getStatByCapacity();
     }
 
     @GetMapping("/stat/by-money")
     public PerformanceMoneyStatResponses getStatByMoney() {
 
-        PerformanceMoneyStatResponses response = performanceQuery.getStatByMoney();
-
-        return response;
+        return performanceQuery.getStatByMoney();
     }
 
     private static List<PerformanceListResponse> convertDtoFromEntity(List<Performance> performances) {

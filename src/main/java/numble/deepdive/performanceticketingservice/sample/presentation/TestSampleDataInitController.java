@@ -1,8 +1,8 @@
-package numble.deepdive.performanceticketingservice.sample.application;
+package numble.deepdive.performanceticketingservice.sample.presentation;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import numble.deepdive.performanceticketingservice.sample.presentation.TestSampleDataInitService;
+import numble.deepdive.performanceticketingservice.sample.application.TestSampleDataInitService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

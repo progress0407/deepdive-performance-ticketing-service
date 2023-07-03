@@ -2,8 +2,8 @@ package numble.deepdive.performanceticketingservice.support.datainit;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import numble.deepdive.performanceticketingservice.sample.application.TestSampleDataInitController;
-import numble.deepdive.performanceticketingservice.sample.presentation.TestSampleDataInitService;
+import numble.deepdive.performanceticketingservice.sample.application.TestSampleDataInitService;
+import numble.deepdive.performanceticketingservice.sample.presentation.TestSampleDataInitController;
 
 import static java.lang.System.out;
 
